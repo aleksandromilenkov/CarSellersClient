@@ -19,3 +19,14 @@ export const getFavoritesCars = async () => {
     throw new Error(error.response?.data.message || error.message);
   }
 };
+
+export const getCars = async (params: {}) => {
+  try {
+    const response = await axios.get(api + "Car", { params: params });
+    return response?.data;
+  } catch (error: any) {
+    // Handle error appropriately
+    console.log(error);
+    throw new Error(error.response?.data.message || error.message);
+  }
+};
