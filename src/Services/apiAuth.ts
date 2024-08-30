@@ -1,5 +1,5 @@
 import { UserProfileToken } from "../Models/User";
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import { Register, useMutation, UseMutationResult } from "@tanstack/react-query";
 import axios, { AxiosError, AxiosResponse } from "axios";
 const api = "https://localhost:7209/api/";
 interface LoginCredentials {
@@ -7,7 +7,19 @@ interface LoginCredentials {
   password: string;
 }
 
+interface RegisterCredentials {
+  userName: string;
+  email:string;
+  password: string;
+}
+
 interface LoginResponse {
+  token: string;
+  userName: string;
+  email: string;
+}
+
+interface RegisterResponse {
   token: string;
   userName: string;
   email: string;
@@ -38,5 +50,22 @@ export async function loginAPI({
   } catch (error: any) {
     // Handle error appropriately
     throw new Error(error.response?.data.message || error.message);
+  }
+}
+
+export async function registerAPI({userName, email, password}: RegisterCredentials) : Promise<RegisterResponse> {
+  try{
+    const response: AxiosResponse<RegisterResponse> = await axios.post(
+      api + "account/register",
+      {
+        userName,
+        email,
+        password,
+      }
+    );
+    return response.data;
+  }catch(error:any){
+      // Handle error appropriately
+      throw new Error(error.response?.data.message || error.message);
   }
 }

@@ -11,6 +11,7 @@ import PageNotFound from "./Pages/PageNotFound";
 import FavoritesCars from "./Pages/FavoritesCars";
 import SearchPage from "./Pages/SearchPage";
 import CompaniesPage from "./Pages/CompaniesPage";
+import RegisterPage from "./Pages/RegisterPage";
 type Props = {};
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,6 +42,7 @@ const App = (props: Props) => {
             />
           </Route>
           <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
