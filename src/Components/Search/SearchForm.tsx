@@ -6,10 +6,10 @@ import {
   CarRegistration,
   CarType,
 } from "../../Utils/Helpers/EnumTypes";
-import useSearchCar from "./useSearchCar";
+import useSearchCar from "../Cars/useSearchCar";
 import { useSearchParams } from "react-router-dom";
 
-import CarComponent  from "../Car";
+import CarComponent  from "../Cars/Car";
 import { Car } from "../../Models/Car";
 
 type Props = {};

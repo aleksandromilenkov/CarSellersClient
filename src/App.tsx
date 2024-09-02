@@ -12,6 +12,8 @@ import FavoritesCars from "./Pages/FavoritesCars";
 import SearchPage from "./Pages/SearchPage";
 import CompaniesPage from "./Pages/CompaniesPage";
 import RegisterPage from "./Pages/RegisterPage";
+import CarCompany from "./Components/Companies/CarCompany";
+import CarDetail from "./Components/Cars/CarDetail";
 type Props = {};
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,7 +33,9 @@ const App = (props: Props) => {
             <Route index element={<Navigate replace to="home" />} />
             <Route path="home" element={<HomePage />} />
             <Route path="search" element={<SearchPage />} />
+            <Route path="cars/:carId" element={<CarDetail />} />
             <Route path="companies" element={<CompaniesPage />} />
+            <Route path="companies/:companyId" element={<CarCompany />} />
             <Route
               path="favorites"
               element={

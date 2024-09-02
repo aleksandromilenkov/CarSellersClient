@@ -11,7 +11,6 @@ interface LoginResponse {
 }
 
 export const getFavoritesCars = async () => {
-  console.log("INs")
   try {
     const response = await axios.get(api + "favoriteCars");
     return response?.data;
@@ -37,6 +36,18 @@ export const createFavoriteCar = async(carId:number)=>{
 export const getCars = async (params: {}) => {
   try {
     const response = await axios.get(api + "Car", { params: params });
+    return response?.data;
+  } catch (error: any) {
+    // Handle error appropriately
+    console.log(error);
+    throw new Error(error.response?.data.message || error.message);
+  }
+};
+
+export const getCar = async (carId:string|undefined) => {
+  try {
+    console.log("HERE")
+    const response = await axios.get(api + `Car/${carId}`);
     return response?.data;
   } catch (error: any) {
     // Handle error appropriately

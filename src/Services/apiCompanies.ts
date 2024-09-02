@@ -13,3 +13,14 @@ export const getCompanies = async () => {
     throw new Error(error.response?.data.message || error.message);
   }
 };
+
+export const getCompany = async (companyId:string | undefined) => {
+  try {
+    const response = await axios.get(api + `CarSellerCompany/${companyId}`);
+    return response?.data;
+  } catch (error: any) {
+    // Handle error appropriately
+    console.log(error);
+    throw new Error(error.response?.data.message || error.message);
+  }
+};
