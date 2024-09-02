@@ -40,9 +40,9 @@ const App = (props: Props) => {
                 </ProtectedRoute>
               }
             />
-          </Route>
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
+          </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

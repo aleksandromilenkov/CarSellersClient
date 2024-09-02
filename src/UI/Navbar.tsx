@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { HiOutlineUser } from "react-icons/hi2";
 import { NavLink, useNavigate } from "react-router-dom";
-import useUser from "../Components/Authentication/useUser";
-import { logout } from "../Services/apiAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../Components/Authentication/userSlice";
+import { RootState } from "../store";
 
 type Props = {};
 const StyledHeaderMenu = styled.ul`
@@ -12,9 +13,12 @@ const StyledHeaderMenu = styled.ul`
 `;
 const Navbar = (props: Props) => {
   const navigate = useNavigate();
-  const { isLoading, isAuthenticated } = useUser();
+  const user = useSelector((state:RootState)=>state.user);
+  const isAuthenticated = !!user.token;
+  const dispatch = useDispatch();
   const logoutHandler = () => {
-    logout();
+    dispatch(logoutUser());
+    localStorage.removeItem("tokenCarSellers");
     navigate("/login");
   };
   return (

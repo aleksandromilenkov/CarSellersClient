@@ -3,9 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import toast from "react-hot-toast";
 import { loginAPI } from "../../Services/apiAuth";
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from "../../store";
+import { loginUser } from "./userSlice";
 function useLogin() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   const { mutate: login, isPending: isLoading } = useMutation({
     mutationFn: loginAPI,
@@ -14,10 +18,11 @@ function useLogin() {
       if (user) {
         localStorage.setItem("tokenCarSellers", user?.token);
         const userObj = {
+          token: user?.token, 
           username: user?.userName,
           email: user?.email,
         };
-        localStorage.setItem("userCarSellers", JSON.stringify(userObj));
+        dispatch(loginUser(userObj))
         toast.success("Login successfully.");
       }
       queryClient.setQueryData(["user"], user);

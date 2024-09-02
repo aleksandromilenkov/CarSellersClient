@@ -8,7 +8,9 @@ import {
 } from "../../Utils/Helpers/EnumTypes";
 import useSearchCar from "./useSearchCar";
 import { useSearchParams } from "react-router-dom";
-import { Car } from "../../Utils/Helpers/Types";
+
+import CarComponent  from "../Car";
+import { Car } from "../../Models/Car";
 
 type Props = {};
 const optionsCarColors = Object.values(CarColor).filter(
@@ -58,6 +60,9 @@ const SearchForm = (props: Props) => {
 
     setSearchParams(newSearchParams);
   };
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
   return (
     <div>
       SearchForm
@@ -139,8 +144,9 @@ const SearchForm = (props: Props) => {
         <button>Search Car</button>
       </form>
       <div>
+        {cars?.length === 0 && <p>No Cars found.</p>}
         {cars?.map((car: Car, idx: number) => (
-          <div key={idx}>{car.carModel.modelName} </div>
+          <CarComponent key={idx} {...car}/>
         ))}
       </div>
     </div>

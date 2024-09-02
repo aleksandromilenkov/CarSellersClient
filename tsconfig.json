@@ -8,6 +8,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "sourceMap": true,
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
     /* Projects */
