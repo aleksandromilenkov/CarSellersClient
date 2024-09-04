@@ -1,37 +1,45 @@
 import { UserProfileToken } from "../Models/User";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import axios, { AxiosError, AxiosResponse } from "axios";
-const api = "https://localhost:7209/api/";
-const token = localStorage.getItem("tokenCarSellers");
-console.log(token)
-axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-interface LoginResponse {
-  // Define the structure of your login response here
-}
+const api = "https://localhost:7209/api/";
+// Create an Axios instance
+const apiClient = axios.create({
+  baseURL: api,
+});
+// Add a request interceptor
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("tokenCarSellers");
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export const getFavoritesCars = async () => {
   try {
-    const response = await axios.get(api + "favoriteCars");
+    const response = await apiClient.get("favoriteCars");
     return response?.data;
   } catch (error: any) {
-    // Handle error appropriately
     console.log(error);
     throw new Error(error.response?.data.message || error.message);
   }
 };
 
-export const createFavoriteCar = async(carId:number)=>{
- 
+export const createFavoriteCar = async (carId: number) => {
   try {
-      const response = await axios.post(api + `favoriteCars?carId=${carId}` );
-      return response?.data;
-    } catch (error: any) {
-      // Handle error appropriately
-      console.log(error);
-      throw new Error(error.response?.data.message || error.message);
-    }
-}
+    const response = await apiClient.post(`favoriteCars?carId=${carId}`);
+    return response?.data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error.response?.data.message || error.message);
+  }
+};
 
 export const getCars = async (params: {}) => {
   try {

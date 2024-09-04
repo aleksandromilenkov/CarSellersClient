@@ -5,12 +5,13 @@ import Car from "../Components/Cars/Car";
 
 type Props = {};
 
-const FavoritesCars = (props: Props) => {
+const FavoritesPage = (props: Props) => {
   const [isLoading, favoriteCars, error] = useFavoritesCars();
   if(isLoading)return <p>Loading...</p>
   return <div>FavoritesCars
     {favoriteCars?.map((car:ModelCar, idx:number)=> <Car key={idx}{...car}/>)}
+    {favoriteCars?.length === 0 && <p>You dont have favorite cars so far.</p>}
   </div>;
 };  
 
-export default FavoritesCars;
+export default FavoritesPage;

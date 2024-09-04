@@ -8,12 +8,14 @@ import ProtectedRoute from "./UI/ProtectedRoute";
 import HomePage from "./Pages/HomePage";
 import LoginPage from "./Pages/LoginPage";
 import PageNotFound from "./Pages/PageNotFound";
-import FavoritesCars from "./Pages/FavoritesCars";
+import FavoritesCars from "./Pages/FavoritesPage";
 import SearchPage from "./Pages/SearchPage";
 import CompaniesPage from "./Pages/CompaniesPage";
 import RegisterPage from "./Pages/RegisterPage";
 import CarCompany from "./Components/Companies/CarCompany";
 import CarDetail from "./Components/Cars/CarDetail";
+import CarCompanyDetail from "./Components/Companies/CarCompanyDetail";
+import FavoritesPage from "./Pages/FavoritesPage";
 type Props = {};
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,12 +37,12 @@ const App = (props: Props) => {
             <Route path="search" element={<SearchPage />} />
             <Route path="cars/:carId" element={<CarDetail />} />
             <Route path="companies" element={<CompaniesPage />} />
-            <Route path="companies/:companyId" element={<CarCompany />} />
+            <Route path="companies/:companyId" element={<CarCompanyDetail />} />
             <Route
               path="favorites"
               element={
                 <ProtectedRoute>
-                  <FavoritesCars />
+                  <FavoritesPage />
                 </ProtectedRoute>
               }
             />
