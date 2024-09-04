@@ -4,6 +4,8 @@ import { CarColor, CarOwner, CarRegistration, CarType } from '../../Utils/Helper
 import useFavoriteCars from '../FavoritesCars/useFavoritesCars'
 import useCreateFavoriteCars from '../FavoritesCars/useCreateFavoriteCar'
 import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
 
 
 type Props = {}
@@ -13,7 +15,9 @@ const Car = (props: ModelCar) => {
     const {isLoading, addToFavorites} = useCreateFavoriteCars();
     const [isLoadingFavorites, favorites ] = useFavoriteCars();
     const {carModel,carOwner,carRegistration,carType,carColor,carID,carSellerCompany,kilometers,price,year} = props;
-    const isThisCarAlreadyInFavorites = favorites.find((favorite: ModelCar)=> favorite.carID === carID)
+    const isThisCarAlreadyInFavorites = favorites?.find((favorite: ModelCar)=> favorite.carID === carID)
+    const user = useSelector((state:RootState)=>state.user);
+    const isAuthenticated = !!user.token;
   return (
     <div>
       <div onClick={()=> navigate(`/cars/${carID}`)}>
@@ -26,7 +30,7 @@ const Car = (props: ModelCar) => {
         <p>Kilometers: {kilometers}</p>
         <p>Price: {price}</p>
         <p>Year: {year}</p>
-        {!isThisCarAlreadyInFavorites && <button onClick={()=>{
+        {!isThisCarAlreadyInFavorites && isAuthenticated && <button onClick={()=>{
             addToFavorites(carID)
         }}>Add To Favorites</button>}
       </div>

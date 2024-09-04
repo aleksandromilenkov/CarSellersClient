@@ -1,7 +1,6 @@
 import { UserProfileToken } from "../Models/User";
 import { Register, useMutation, UseMutationResult } from "@tanstack/react-query";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { useDispatch, useSelector } from "react-redux";
 const api = "https://localhost:7209/api/";
 interface LoginCredentials {
   userName: string;

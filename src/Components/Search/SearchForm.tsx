@@ -26,6 +26,7 @@ const optionsCarRegistration = Object.values(CarRegistration).filter(
   (value) => isNaN(Number(value)) === true
 );
 type LoginFormsInputs = {
+  manufacturerName:string;
   modelName: string;
   year: number;
   kilometersFrom: number;
@@ -67,6 +68,15 @@ const SearchForm = (props: Props) => {
     <div>
       SearchForm
       <form onSubmit={handleSubmit(submitHandler)}>
+        <div className="formField">
+          <label htmlFor="manufacturerName">Car Manufacturer</label>
+          <input
+            type="text"
+            id="manufacturerName"
+            placeholder="manufacturer name"
+            {...register("manufacturerName")}
+          />
+        </div>
         <div className="formField">
           <label htmlFor="modelName">Car Model</label>
           <input
