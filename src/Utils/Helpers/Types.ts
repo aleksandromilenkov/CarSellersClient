@@ -1,4 +1,5 @@
 import { Car } from "../../Models/Car";
+import { CLAIM_TYPES } from "./constants";
 import { CarColor, CarOwner, CarRegistration, CarType } from "./EnumTypes";
 
 
@@ -20,4 +21,10 @@ export type UpdateUserInfo ={
   email: string|null;
   currentPassword: string|null;
   newPassword:string|null
+}
+export interface JwtPayloadInterface {
+  email:string,
+  name:string,
+  nameId: string,
+  role:string[]
 }

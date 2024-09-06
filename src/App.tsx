@@ -17,6 +17,8 @@ import CarDetail from "./Components/Cars/CarDetail";
 import CarCompanyDetail from "./Components/Companies/CarCompanyDetail";
 import FavoritesPage from "./Pages/FavoritesPage";
 import ProfilePage from "./Pages/ProfilePage";
+import ProtectedAdminRoute from "./Utils/Helpers/ProtectedAdminRoute";
+import AdminPanelPage from "./Pages/AdminPanelPage";
 type Props = {};
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -57,8 +59,11 @@ const App = (props: Props) => {
                 </ProtectedRoute>
               }
             />
-          </Route>
+          <Route path="adminPanel" element = {<ProtectedAdminRoute>
+            <AdminPanelPage/>
+          </ProtectedAdminRoute>}/>
           <Route path="*" element={<PageNotFound />} />
+          </Route>
         </Routes>
       </BrowserRouter>
       <Toaster
