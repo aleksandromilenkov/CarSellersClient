@@ -9,3 +9,15 @@ export type CarCompany ={
   address:string;
   cars: Car[];
 }
+
+export type UserUpdateReturnDTO = {
+  username:string;
+  email:string;
+}
+
+export type UpdateUserInfo ={
+  username: string | null;
+  email: string|null;
+  currentPassword: string|null;
+  newPassword:string|null
+}

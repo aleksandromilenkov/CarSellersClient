@@ -29,7 +29,10 @@ const Navbar = (props: Props) => {
 
       <NavLink to={"/companies"}>Car Seller Companies</NavLink>
       {isAuthenticated ? (
+        <>
+        <NavLink to={"/profile"}>Profile</NavLink>
         <button onClick={logoutHandler}>Logout</button>
+        </>
       ) : (
         <NavLink to={"/login"}>Login</NavLink>
       )}

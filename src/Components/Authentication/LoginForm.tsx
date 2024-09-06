@@ -20,6 +20,7 @@ const LoginForm = (props: Props) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<LoginFormsInputs>({ resolver: yupResolver(validation) });
   const handleLogin = (form: LoginFormsInputs) => {
@@ -27,6 +28,7 @@ const LoginForm = (props: Props) => {
     const password = form.password;
     console.log(userName, password);
     login({ userName, password });
+    reset()
   };
   return (
     <form onSubmit={handleSubmit(handleLogin)}>

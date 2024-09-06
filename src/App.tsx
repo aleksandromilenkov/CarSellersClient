@@ -16,6 +16,7 @@ import CarCompany from "./Components/Companies/CarCompany";
 import CarDetail from "./Components/Cars/CarDetail";
 import CarCompanyDetail from "./Components/Companies/CarCompanyDetail";
 import FavoritesPage from "./Pages/FavoritesPage";
+import ProfilePage from "./Pages/ProfilePage";
 type Props = {};
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -48,6 +49,14 @@ const App = (props: Props) => {
             />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
+          <Route
+              path="profile"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>

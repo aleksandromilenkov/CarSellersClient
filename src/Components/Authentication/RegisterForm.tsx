@@ -22,6 +22,7 @@ const RegisterForm = (props: Props) => {
     const { registerUser, isLoading } = useRegister();
     const {
       register,
+      reset,
       handleSubmit,
       formState: { errors },
     } = useForm<RegisterFormInputs>({ resolver: yupResolver(validation) });
@@ -31,6 +32,7 @@ const RegisterForm = (props: Props) => {
       const email = form.email;
       console.log(userName, password, email);
       registerUser({ userName, email, password });
+      reset()
     };
   return (
     <form onSubmit={handleSubmit(handleRegister)}>

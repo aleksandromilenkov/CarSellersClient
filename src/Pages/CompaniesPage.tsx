@@ -10,7 +10,7 @@ const CompaniesPage = (props: Props) => {
   console.log(companies);
   if(isLoading)return <p>Loading...</p>
   return <div>CompaniesPage
-    {companies?.map((company : ModelCompany,idx:number)=> <CarCompany company={company}/>)}
+    {companies?.map((company : ModelCompany,idx:number)=> <CarCompany key={idx} company={company}/>)}
   </div>;
 };
 

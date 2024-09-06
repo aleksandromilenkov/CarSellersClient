@@ -42,8 +42,11 @@ type LoginFormsInputs = {
 const SearchForm = (props: Props) => {
   const { register, formState, getValues, handleSubmit, reset } =
     useForm<LoginFormsInputs>();
+    
   const [isLoading, cars, error] = useSearchCar();
   const [searchParams, setSearchParams] = useSearchParams();
+
+
   const submitHandler = (formValues: LoginFormsInputs) => {
     console.log(formValues);
     const mpa = new Map<string, string | number>();
