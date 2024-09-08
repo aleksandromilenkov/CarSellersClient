@@ -50,3 +50,8 @@ export type CreateManufacturerInputs = {
   manufacturerName: string;
   country:string;
 }
+
+export type CreateCompanyInputs = {
+  companyName: string;
+  address:string;
+}
