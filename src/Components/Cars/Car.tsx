@@ -22,7 +22,7 @@ const Car = (props: ModelCar) => {
     <div>
       <div onClick={()=> navigate(`/cars/${carID}`)}>
         <h4>{carModel.manufacturer.manufacturerName} {carModel.modelName || carModel.carModel.modelName}</h4>
-        <p>Owner: {CarOwner[carOwner]}</p>
+        {CarOwner[carOwner] && <p>Owner: {CarOwner[carOwner]}</p>}
         <p>Registration: {CarRegistration[carRegistration]}</p>
         <p>Type: {CarType[carType]}</p>
         <p>Color: {CarColor[carColor]}</p>
