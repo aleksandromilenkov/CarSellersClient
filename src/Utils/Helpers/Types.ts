@@ -30,13 +30,13 @@ export interface JwtPayloadInterface {
 }
 
 export type CreateCarInputs = {
-  companyID:number;
+  companyID: number;
   modelID: number;
   year: number;
   kilometers: number;
   price: number;
-  carColor: CarColor;
-  carType: CarType;
-  carOwner: CarOwner | string | undefined;
-  carRegistration: CarRegistration;
+  carColor?: CarColor | string;  // Optional and can be enum or string
+  carType?: CarType | string;    // Optional and can be enum or string
+  carOwner?: CarOwner | string;  // Optional and can be enum or string
+  carRegistration?: CarRegistration | string; // Optional and can be enum or string
 };
