@@ -7,7 +7,7 @@ import {
   CarType,
 } from "../../Utils/Helpers/EnumTypes";
 import useCompanies from "../Companies/useCompanies";
-import useCarModels from "./useCarModels";
+import useCarModels from "../CarModels/useCarModels";
 import useCreateCar from "./useCreateCar";
 import { CreateCarInputs } from "../../Utils/Helpers/Types";
 import useManufacturers from "../Manufacturers/useManufacturers";

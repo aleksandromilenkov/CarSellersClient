@@ -40,3 +40,8 @@ export type CreateCarInputs = {
   carOwner?: CarOwner | string;  // Optional and can be enum or string
   carRegistration?: CarRegistration | string; // Optional and can be enum or string
 };
+
+export type CreateCarModelInputs = {
+  manufacturerID: number;
+  modelName:string;
+}
