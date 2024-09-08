@@ -1,6 +1,7 @@
 import { UserProfileToken } from "../Models/User";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { CreateCarInputs } from "../Utils/Helpers/Types";
 
 const api = "https://localhost:7209/api/";
 // Create an Axios instance
@@ -41,6 +42,16 @@ export const createFavoriteCar = async (carId: number) => {
   }
 };
 
+export const createCarAPI = async (carInputs:CreateCarInputs) => {
+  try {
+    const response = await apiClient.post(`car`, carInputs);
+    return response?.data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error.response?.data.message || error.message);
+  }
+};
+
 export const getCars = async (params: {}) => {
   try {
     const response = await axios.get(api + "Car", { params: params });
@@ -56,6 +67,16 @@ export const getCar = async (carId:string|undefined) => {
   try {
     console.log("HERE")
     const response = await axios.get(api + `Car/${carId}`);
+    return response?.data;
+  } catch (error: any) {
+    // Handle error appropriately
+    console.log(error);
+    throw new Error(error.response?.data.message || error.message);
+  }
+};
+export const getCarModels = async () => {
+  try {
+    const response = await axios.get(api + `CarModel`);
     return response?.data;
   } catch (error: any) {
     // Handle error appropriately

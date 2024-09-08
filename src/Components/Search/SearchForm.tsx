@@ -25,7 +25,7 @@ const optionsCarOwner = Object.values(CarOwner).filter(
 const optionsCarRegistration = Object.values(CarRegistration).filter(
   (value) => isNaN(Number(value)) === true
 );
-type LoginFormsInputs = {
+type SearchCarFormInputs = {
   manufacturerName:string;
   modelName: string;
   year: number;
@@ -41,17 +41,17 @@ type LoginFormsInputs = {
 
 const SearchForm = (props: Props) => {
   const { register, formState, getValues, handleSubmit, reset } =
-    useForm<LoginFormsInputs>();
+    useForm<SearchCarFormInputs>();
     
   const [isLoading, cars, error] = useSearchCar();
   const [searchParams, setSearchParams] = useSearchParams();
 
 
-  const submitHandler = (formValues: LoginFormsInputs) => {
+  const submitHandler = (formValues: SearchCarFormInputs) => {
     console.log(formValues);
     const mpa = new Map<string, string | number>();
     Object.keys(formValues).forEach((val, idx) => {
-      const key = val as keyof LoginFormsInputs; // Cast to keyof LoginFormsInputs
+      const key = val as keyof SearchCarFormInputs; // Cast to keyof SearchCarFormInputs
       const value = formValues[key]; // Access value with proper type
       if (value !== "" && value !== "All") {
         mpa.set(val, value);

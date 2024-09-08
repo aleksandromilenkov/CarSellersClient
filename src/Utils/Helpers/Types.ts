@@ -28,3 +28,15 @@ export interface JwtPayloadInterface {
   nameId: string,
   role:string[]
 }
+
+export type CreateCarInputs = {
+  companyID:number;
+  modelID: number;
+  year: number;
+  kilometers: number;
+  price: number;
+  carColor: CarColor;
+  carType: CarType;
+  carOwner: CarOwner | string | undefined;
+  carRegistration: CarRegistration;
+};
