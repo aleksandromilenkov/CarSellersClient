@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import CreateCarForm from '../Components/Cars/CreateCarForm';
 import CreateCarModelForm from '../Components/CarModels/CreateCarModelForm';
+import CreateManufacterForm from '../Components/Manufacturers/CreateManufacterForm';
 
 type Props = {}
 
@@ -44,6 +45,7 @@ const AdminPanelPage = (props: Props) => {
         </ul>
         {isCreateCarFormOpen && <CreateCarForm onClose={setIsCreateCarFormOpen}/>}
         {isCreateCarModelFormOpen && <CreateCarModelForm onClose={setIsCreateCarModelFormOpen}/>}
+        {isCreateManufacturerFormOpen && <CreateManufacterForm onClose={setIsCreateManufacturerFormOpen}/>}
     </div>
   )
 }

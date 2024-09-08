@@ -45,3 +45,8 @@ export type CreateCarModelInputs = {
   manufacturerID: number;
   modelName:string;
 }
+
+export type CreateManufacturerInputs = {
+  manufacturerName: string;
+  country:string;
+}
