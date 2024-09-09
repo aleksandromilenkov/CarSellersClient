@@ -8,9 +8,7 @@ type Props = {}
 
 const CarCompanyDetail = (props: Props) => {
     const [isLoading, company, error] = useCompany();
-    console.log(company)
     const [isLoadingCars, companyCars, errorCars] = useCompanyCars();
-    console.log(companyCars)
     if(isLoading || isLoadingCars) return <p>Loading...</p>
   return (
     <div>CarCompanyDetail

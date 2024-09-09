@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   CarColor,
@@ -14,13 +14,18 @@ import useManufacturers from "../Manufacturers/useManufacturers";
 import { Manufacturer } from "../../Models/Manufacturer";
 import { CarModel } from "../../Models/CarModel";
 import { Company } from "../../Models/Company";
+import useEditCar from "./useEditCar";
+import { Car } from "../../Models/Car";
+import { useMemo } from "react";
 
 // Define form validation functions
 const validateYear = (year: number) => year >= 1900;
 const validatePositiveNumber = (value: number) => value > 0;
 
 type Props = {
-  onClose: Dispatch<SetStateAction<boolean>>;
+  onClose?: Dispatch<SetStateAction<boolean>>;
+  editingCar?: Car | {};
+  isEditSession?:boolean;
 };
 
 const optionsCarColors = Object.values(CarColor).filter(
@@ -36,22 +41,48 @@ const optionsCarRegistration = Object.values(CarRegistration).filter(
   (value) => isNaN(Number(value)) === true
 );
 
-const CreateCarForm = ({ onClose }: Props) => {
+const CreateCarForm = ({ onClose, editingCar={}, isEditSession }: Props) => {
+  const editingCarModel = isEditSession ? editingCar as Car : {};
   const { register, formState: { errors }, handleSubmit, setError, clearErrors } =
-    useForm<CreateCarInputs>();
+    useForm<CreateCarInputs>({
+      defaultValues: isEditSession ? editingCarModel : {}
+    });
+    console.log(editingCar)
+    const [isLoadingCompanies, companies, error] = useCompanies();
+    const [isLoadingManufacturers, manufacturers, error3] = useManufacturers();
+    const [isLoadingCarModels, carModels, error2] = useCarModels();
+    const { isLoading: isLoadingEditCar, editCar } = useEditCar();
+    const { isLoading, createCar } = useCreateCar();
+  
+    const [selectedCarModels, setSelectedCarModels] = useState<CarModel[]>([]);
+    const [selectedCarModel, setSelectedCarModel] = useState<number | null>(
+      (editingCarModel as Car)?.carModel?.modelID || null
+    );
+  
+    const alreadySelectedManufacturer = useMemo(() => {
+      return isEditSession && manufacturers?.length
+        ? manufacturers.find(
+            (m: Manufacturer) =>
+              m.manufacturerID ===  (editingCarModel as Car)?.carModel?.manufacturerID
+          )?.manufacturerID || null
+        : null;
+    }, [isEditSession, manufacturers, editingCar]);
+  
+    const [selectedManufacturer, setSelectedManufacturer] = useState<number | null>(alreadySelectedManufacturer);
+    const [isSelectedManufacturer, setIsSelectedManufacturer] = useState<boolean>(true);
+  
 
-  const [isLoadingCompanies, companies, error] = useCompanies();
-  const [isLoadingManufacturers, manufacturers, error3] = useManufacturers();
-  const [isLoadingCarModels, carModels, error2] = useCarModels();
-  const { isLoading, createCar } = useCreateCar();
-
-  const [selectedCarModels, setSelectedCarModels] = useState<CarModel[]>([]);
-  const [selectedCarModel, setSelectedCarModel] = useState<number | null>(null);
-  const [selectedManufacturer, setSelectedManufacturer] = useState<number | null>(null);
-  const [isSelectedManufacturer, setIsSelectedManufacturer] = useState<boolean>(true);
+  useEffect(()=>{
+    console.log(alreadySelectedManufacturer)
+    if(alreadySelectedManufacturer){
+      determineTheSelectedCarModels(alreadySelectedManufacturer)
+    }
+  },[alreadySelectedManufacturer,carModels])
 
   const determineTheSelectedCarModels = (manufacturerId: number) => {
-    const newCarModels = carModels.filter((cm: CarModel) => cm.manufacturerID === manufacturerId);
+    const newCarModels = carModels?.filter(
+      (cm: CarModel) => cm.manufacturerID === manufacturerId
+    );
     setSelectedCarModels(newCarModels);
   };
 
@@ -73,9 +104,10 @@ const CreateCarForm = ({ onClose }: Props) => {
     setSelectedCarModel(+event.target.value);
   }
  }
+
   const validateForm = (data: CreateCarInputs) => {
     let isValid = true;
-
+    console.log(data)
     if (!data.companyID) {
       setError("companyID", { type: "manual", message: "Company is required" });
       isValid = false;
@@ -131,40 +163,41 @@ const CreateCarForm = ({ onClose }: Props) => {
       clearErrors("price");
     }
 
-    if (data.carColor && !optionsCarColors.includes(data.carColor)) {
-      setError("carColor", { type: "manual", message: "Invalid color" });
-      isValid = false;
-    } else {
-      clearErrors("carColor");
-    }
+    // if (data.carColor && !optionsCarColors.includes(data.carColor)) {
+    //   setError("carColor", { type: "manual", message: "Invalid color" });
+    //   isValid = false;
+    // } else {
+    //   clearErrors("carColor");
+    // }
 
-    if (data.carType && !optionsCarTypes.includes(data.carType)) {
-      setError("carType", { type: "manual", message: "Invalid type" });
-      isValid = false;
-    } else {
-      clearErrors("carType");
-    }
+    // if (data.carType && !optionsCarTypes.includes(data.carType)) {
+    //   setError("carType", { type: "manual", message: "Invalid type" });
+    //   isValid = false;
+    // } else {
+    //   clearErrors("carType");
+    // }
 
-    if (data.carOwner && !optionsCarOwner.includes(data.carOwner)) {
-      setError("carOwner", { type: "manual", message: "Invalid owner" });
-      isValid = false;
-    } else {
-      clearErrors("carOwner");
-    }
+    // if (data.carOwner && !optionsCarOwner.includes(data.carOwner)) {
+    //   setError("carOwner", { type: "manual", message: "Invalid owner" });
+    //   isValid = false;
+    // } else {
+    //   clearErrors("carOwner");
+    // }
 
-    if (data.carRegistration && !optionsCarRegistration.includes(data.carRegistration)) {
-      setError("carRegistration", { type: "manual", message: "Invalid registration" });
-      isValid = false;
-    } else {
-      clearErrors("carRegistration");
-    }
+    // if (data.carRegistration && !optionsCarRegistration.includes(data.carRegistration)) {
+    //   setError("carRegistration", { type: "manual", message: "Invalid registration" });
+    //   isValid = false;
+    // } else {
+    //   clearErrors("carRegistration");
+    // }
 
     return isValid;
   };
 
   const submitHandler = (formValues: CreateCarInputs) => {
+    console.log(formValues);
     if (validateForm(formValues)) {
-      // Filter out fields that are empty or not selected
+      console.log("E")
       const filteredValues = {
         ...formValues,
         carOwner: formValues.carOwner === "" ? undefined : formValues.carOwner,
@@ -172,18 +205,25 @@ const CreateCarForm = ({ onClose }: Props) => {
         carRegistration: formValues.carRegistration === "" ? undefined : formValues.carRegistration,
         carType: formValues.carType === "" ? undefined : formValues.carType,
       };
-      createCar(filteredValues);
+      console.log(filteredValues);
+      if (isEditSession && (editingCarModel as Car).carID) {
+        const carID = (editingCarModel as Car).carID;
+        editCar({ carInputs: filteredValues, carId: carID });
+      } else {
+        createCar(filteredValues);
+      }
     }
   };
+  
 
-  if (isLoading || isLoadingCompanies || isLoadingManufacturers || isLoadingCarModels)
+  if (isLoading || isLoadingCompanies || isLoadingManufacturers || isLoadingCarModels || isLoadingEditCar)
     return <div>Loading...</div>;
   if (error || error2 || error3)
     return <div>Error: {error.message || error2.message || error3.message}</div>;
 
   return (
     <div>
-      <h2>Create Car Form</h2>
+      <h2>{isEditSession ? "Edit Car" : "Create Car"}</h2>
       <form onSubmit={handleSubmit(submitHandler)}>
         <div className="formField">
           <label htmlFor="companyID">Select Car Company</label>
@@ -199,10 +239,10 @@ const CreateCarForm = ({ onClose }: Props) => {
         </div>
         <div className="formField">
           <label htmlFor="manufacturer">Select Manufacturer</label>
-          <select id="manufacturer" onChange={handleManufacturerChange}>
+          <select id="manufacturer" onChange={handleManufacturerChange} defaultValue={isEditSession && alreadySelectedManufacturer.manufacturerID}>
             <option value="">Select Manufacturer</option>
             {manufacturers?.map((option: Manufacturer, index: number) => (
-              <option key={index} value={option.manufacturerID}>
+              <option key={index} value={option.manufacturerID} selected = {option.manufacturerID === alreadySelectedManufacturer}>
                 {option.manufacturerName}
               </option>
             ))}
@@ -211,12 +251,12 @@ const CreateCarForm = ({ onClose }: Props) => {
         </div>
         {!selectedManufacturer ? "" : <div className="formField">
           <label htmlFor="modelID">Select Car Model</label>
-          <select id="modelID"{...register('modelID', {
+          <select id="modelID" defaultValue={isEditSession && (editingCar as Car)?.carModel?.modelID} {...register('modelID', {
     onChange: handleSelectCarModel
   })}>
     <option value={""}>Select Car Model</option>
             {selectedCarModels?.map((option: CarModel, index: number) => (
-              <option key={index} value={option.modelID}>
+              <option key={index} value={option.modelID} selected = {isEditSession && option.modelID === (editingCar as Car)?.carModel.modelID}>
                 {option.modelName}
               </option>
             ))}
@@ -244,7 +284,7 @@ const CreateCarForm = ({ onClose }: Props) => {
         </div>
         <div className="formField">
           <label htmlFor="carColor">Select Car Color</label>
-          <select id="carColor" {...register("carColor")}>
+          <select id="carColor" defaultValue={(editingCar as Car)?.carColor} {...register("carColor")}>
             <option value="">Select Color</option>
             {optionsCarColors.map((option, index) => (
               <option key={index} value={option}>
@@ -256,10 +296,10 @@ const CreateCarForm = ({ onClose }: Props) => {
         </div>
         <div className="formField">
           <label htmlFor="carType">Select Car Type</label>
-          <select id="carType" {...register("carType")}>
+          <select id="carType" defaultValue={(editingCar as Car)?.carType} {...register("carType")} >
             <option value="">Select Type</option>
             {optionsCarTypes.map((option, index) => (
-              <option key={index} value={option}>
+              <option key={index} value={option} selected = {(editingCar as Car)?.carType == option} >
                 {option}
               </option>
             ))}
@@ -268,7 +308,7 @@ const CreateCarForm = ({ onClose }: Props) => {
         </div>
         <div className="formField">
           <label htmlFor="carOwner">Select Car Owner</label>
-          <select id="carOwner" {...register("carOwner")}>
+          <select id="carOwner" defaultValue={(editingCar as Car)?.carOwner} {...register("carOwner")} >
             <option value="">Select Owner</option>
             {optionsCarOwner.map((option, index) => (
               <option key={index} value={option}>
@@ -280,7 +320,7 @@ const CreateCarForm = ({ onClose }: Props) => {
         </div>
         <div className="formField">
           <label htmlFor="carRegistration">Select Car Registration</label>
-          <select id="carRegistration" {...register("carRegistration")}>
+          <select id="carRegistration" {...register("carRegistration")} defaultValue={(editingCar as Car)?.carRegistration}>
             <option value="">Select Registration</option>
             {optionsCarRegistration.map((option, index) => (
               <option key={index} value={option}>
@@ -290,8 +330,8 @@ const CreateCarForm = ({ onClose }: Props) => {
           </select>
           {errors.carRegistration && <p>{errors.carRegistration.message}</p>}
         </div>
-        <button type="submit" disabled={!isSelectedManufacturer}>Create Car</button>
-        <button type="button" onClick={() => onClose(false)}>Cancel</button>
+        <button type="submit" disabled={!isSelectedManufacturer}>{isEditSession ? "Edit Car" : "Create Car"}</button>
+        <button type="button" onClick={() => onClose && onClose(false)}>Cancel</button>
       </form>
     </div>
   );

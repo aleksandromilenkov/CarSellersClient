@@ -9,8 +9,18 @@ import { RootState } from '../../store'
 import { jwtDecode } from 'jwt-decode'
 import { JwtPayloadInterface } from '../../Utils/Helpers/Types'
 import useDeleteCar from './useDeleteCar'
+import styled from 'styled-components';
+import Modal from '../../UI/Modal'
+import Button from '../../UI/Button'
+import ConfirmDelete from '../../UI/ConfirmDelete'
+import { HiPencil, HiTrash } from 'react-icons/hi2'
+import CreateCarForm from './CreateCarForm'
 
-
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 1.2rem;
+  justify-content: flex-end;
+`;
 type Props = {}
 
 const Car = (props: ModelCar) => {
@@ -41,7 +51,28 @@ const Car = (props: ModelCar) => {
         <p>Price: {price}</p>
         <p>Year: {year}</p>
         {isAdmin && <div className='adminActions'>
-            <button onClick={()=>deleteCar(props.carID)}>Delete</button>
+            {/* <button onClick={()=>deleteCar(props.carID)}>Delete</button> */}
+          <Modal>
+          <Modal.Open opens="edit-car">
+            <Button variation="secondary"><HiPencil /></Button>
+          </Modal.Open>
+          <Modal.Window name="edit-car">
+          <CreateCarForm editingCar={props} isEditSession={true} />
+          </Modal.Window>
+          </Modal>
+        <Modal>
+        <ButtonGroup>
+          <Modal.Open opens="delete-car">
+            <Button variation="danger"><HiTrash /></Button>
+          </Modal.Open>
+          <Modal.Window name="delete-car">
+            <ConfirmDelete
+              onConfirm={()=>deleteCar(props.carID)}
+              resourceName={`${carModel.manufacturer.manufacturerName} ${carModel.modelName || carModel.carModel.modelName}`}
+            />
+          </Modal.Window>
+        </ButtonGroup>
+      </Modal>
           </div>}
         <button onClick={()=> navigate(`/cars/${carID}`)}>View Car</button>
         {!isThisCarAlreadyInFavorites && isAuthenticated && <button onClick={()=>{

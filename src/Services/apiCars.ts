@@ -51,6 +51,17 @@ export const createCarAPI = async (carInputs:CreateCarInputs) => {
     throw new Error(error.response?.data.message || error.message);
   }
 };
+export const editCarAPI = async (carInputs:CreateCarInputs, carId:number|string|undefined) => {
+  console.log(carInputs);
+  console.log(carId);
+  try {
+    const response = await apiClient.put(`car/${carId}`, carInputs);
+    return response?.data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error.response?.data.message || error.message);
+  }
+};
 
 
 export const deleteCarAPI = async (carId:number) => {
