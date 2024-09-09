@@ -52,6 +52,17 @@ export const createCarAPI = async (carInputs:CreateCarInputs) => {
   }
 };
 
+
+export const deleteCarAPI = async (carId:number) => {
+  try {
+    const response = await apiClient.delete(`car/${carId}`);
+    return response?.data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error.response?.data.message || error.message);
+  }
+};
+
 export const getCars = async (params: {}) => {
   try {
     const response = await axios.get(api + "Car", { params: params });

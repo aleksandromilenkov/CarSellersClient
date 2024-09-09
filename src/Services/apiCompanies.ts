@@ -15,6 +15,17 @@ export const getCompanies = async () => {
   }
 };
 
+export const getCompanyCars = async (companyId:string | undefined) => {
+  try {
+    const response = await axios.get(api + `CarSellerCompany/${companyId}`);
+    return response?.data?.cars;
+  } catch (error: any) {
+    // Handle error appropriately
+    console.log(error);
+    throw new Error(error.response?.data.message || error.message);
+  }
+};
+
 export const getCompany = async (companyId:string | undefined) => {
   try {
     const response = await axios.get(api + `CarSellerCompany/${companyId}`);
