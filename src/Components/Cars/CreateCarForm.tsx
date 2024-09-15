@@ -26,6 +26,7 @@ type Props = {
   onClose?: Dispatch<SetStateAction<boolean>>;
   editingCar?: Car | {};
   isEditSession?:boolean;
+  onCloseModal?: () => void;
 };
 
 const optionsCarColors = Object.values(CarColor).filter(
@@ -41,7 +42,7 @@ const optionsCarRegistration = Object.values(CarRegistration).filter(
   (value) => isNaN(Number(value)) === true
 );
 
-const CreateCarForm = ({ onClose, editingCar={}, isEditSession }: Props) => {
+const CreateCarForm = ({ onClose, editingCar={}, isEditSession, onCloseModal }: Props) => {
   const editingCarModel = isEditSession ? editingCar as Car : {};
   const { register, formState: { errors }, handleSubmit, setError, clearErrors, reset } =
     useForm<CreateCarInputs>({
@@ -216,11 +217,13 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession }: Props) => {
       if (isEditSession && (editingCarModel as Car).carID) {
         const carID = (editingCarModel as Car).carID;
         editCar({ carInputs: filteredValues, carId: carID });
+        onCloseModal && onCloseModal();
         
       } else {
         createCar(filteredValues);
         setSelectedCarColor("transparent");
         reset()
+        onCloseModal && onCloseModal();
       }
     }
   };
@@ -342,7 +345,11 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession }: Props) => {
           {errors.carRegistration && <p>{errors.carRegistration.message}</p>}
         </div>
         <button type="submit" disabled={!isSelectedManufacturer}>{isEditSession ? "Edit Car" : "Create Car"}</button>
-        <button type="button" onClick={() => onClose && onClose(false)}>Cancel</button>
+        <button type="button" onClick={() =>{
+          onClose && onClose(false);
+          onCloseModal && onCloseModal();
+        } 
+        }>Cancel</button>
       </form>
     </div>
   );
