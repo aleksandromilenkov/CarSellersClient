@@ -43,7 +43,7 @@ const optionsCarRegistration = Object.values(CarRegistration).filter(
 
 const CreateCarForm = ({ onClose, editingCar={}, isEditSession }: Props) => {
   const editingCarModel = isEditSession ? editingCar as Car : {};
-  const { register, formState: { errors }, handleSubmit, setError, clearErrors } =
+  const { register, formState: { errors }, handleSubmit, setError, clearErrors, reset } =
     useForm<CreateCarInputs>({
       defaultValues: isEditSession ? editingCarModel : {}
     });
@@ -57,6 +57,9 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession }: Props) => {
     const [selectedCarModels, setSelectedCarModels] = useState<CarModel[]>([]);
     const [selectedCarModel, setSelectedCarModel] = useState<number | null>(
       (editingCarModel as Car)?.carModel?.modelID || null
+    );
+    const [selectedCarColor, setSelectedCarColor] = useState<string | null>(
+      (editingCarModel as Car)?.carColor?.toString() || null
     );
   
     const alreadySelectedManufacturer = useMemo(() => {
@@ -103,6 +106,10 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession }: Props) => {
   }else{
     setSelectedCarModel(+event.target.value);
   }
+ }
+
+ const handleSelectCarColor = (event: React.ChangeEvent<HTMLSelectElement>)=>{
+  setSelectedCarColor(event.target.value.toLowerCase());
  }
 
   const validateForm = (data: CreateCarInputs) => {
@@ -209,8 +216,11 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession }: Props) => {
       if (isEditSession && (editingCarModel as Car).carID) {
         const carID = (editingCarModel as Car).carID;
         editCar({ carInputs: filteredValues, carId: carID });
+        
       } else {
         createCar(filteredValues);
+        setSelectedCarColor("transparent");
+        reset()
       }
     }
   };
@@ -284,7 +294,8 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession }: Props) => {
         </div>
         <div className="formField">
           <label htmlFor="carColor">Select Car Color</label>
-          <select id="carColor" defaultValue={(editingCar as Car)?.carColor} {...register("carColor")}>
+          <div style={{backgroundColor:`${selectedCarColor ? selectedCarColor === "other" ? "transparent" : selectedCarColor  : "transparent"}`, width:'1rem', height:"1rem", borderRadius:"50%", border:"1px solid black" }}></div>
+          <select id="carColor" defaultValue={(editingCar as Car)?.carColor} {...register("carColor", {onChange:handleSelectCarColor})}>
             <option value="">Select Color</option>
             {optionsCarColors.map((option, index) => (
               <option key={index} value={option}>

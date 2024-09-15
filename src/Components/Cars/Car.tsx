@@ -61,7 +61,6 @@ const Car = (props: ModelCar) => {
           </Modal.Window>
           </Modal>
         <Modal>
-        <ButtonGroup>
           <Modal.Open opens="delete-car">
             <Button variation="danger"><HiTrash /></Button>
           </Modal.Open>
@@ -71,7 +70,6 @@ const Car = (props: ModelCar) => {
               resourceName={`${carModel.manufacturer.manufacturerName} ${carModel.modelName || carModel.carModel.modelName}`}
             />
           </Modal.Window>
-        </ButtonGroup>
       </Modal>
           </div>}
         <button onClick={()=> navigate(`/cars/${carID}`)}>View Car</button>
