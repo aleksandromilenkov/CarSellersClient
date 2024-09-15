@@ -15,6 +15,7 @@ import Button from '../../UI/Button'
 import ConfirmDelete from '../../UI/ConfirmDelete'
 import { HiPencil, HiTrash } from 'react-icons/hi2'
 import CreateCarForm from './CreateCarForm'
+import useRemoveFromFavoriteCars from '../FavoritesCars/useRemoveFavoriteCars'
 
 const ButtonGroup = styled.div`
   display: flex;
@@ -26,6 +27,7 @@ type Props = {}
 const Car = (props: ModelCar) => {
   const navigate = useNavigate();
     const {isLoading, addToFavorites} = useCreateFavoriteCars();
+    const {isLoading: isLoadingRemovingFromFavorites, removeFromFavorites} = useRemoveFromFavoriteCars();
     const [isLoadingFavorites, favorites ] = useFavoriteCars();
     const {isLoading: isLoadingDelete, deleteCar } = useDeleteCar();
     const {carModel,carOwner,carRegistration,carType,carColor,carID,carSellerCompany,kilometers,price,year} = props;
@@ -57,7 +59,7 @@ const Car = (props: ModelCar) => {
             <Button variation="secondary"><HiPencil /></Button>
           </Modal.Open>
           <Modal.Window name="edit-car">
-          <CreateCarForm editingCar={props} isEditSession={true} />
+          <CreateCarForm editingCar={props} isEditSession={true}/>
           </Modal.Window>
           </Modal>
         <Modal>
@@ -76,6 +78,9 @@ const Car = (props: ModelCar) => {
         {!isThisCarAlreadyInFavorites && isAuthenticated && <button onClick={()=>{
             addToFavorites(carID)
         }}>Add To Favorites</button>}
+        {isThisCarAlreadyInFavorites && isAuthenticated &&<button onClick={()=>{
+            removeFromFavorites(carID)
+        }}>Remove from Favorites</button>} 
       </div>
         
     </div>

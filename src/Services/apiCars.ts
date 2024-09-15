@@ -42,6 +42,16 @@ export const createFavoriteCar = async (carId: number) => {
   }
 };
 
+export const removeFavoriteCar = async (carId: number) => {
+  try {
+    const response = await apiClient.delete(`favoriteCars/${carId}`);
+    return response?.data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error.response?.data.message || error.message);
+  }
+};
+
 export const createCarAPI = async (carInputs:CreateCarInputs) => {
   try {
     const response = await apiClient.post(`car`, carInputs);
