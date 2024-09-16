@@ -8,6 +8,7 @@ export type CarCompany ={
   companyID:number;
   companyName:string;
   address:string;
+  telephoneNumber:string;
   cars: Car[];
 }
 
@@ -54,4 +55,5 @@ export type CreateManufacturerInputs = {
 export type CreateCompanyInputs = {
   companyName: string;
   address:string;
+  telephoneNumber?:string;
 }

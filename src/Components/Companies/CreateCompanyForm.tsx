@@ -8,7 +8,8 @@ import useCreateCompany from "./useCreateCompany";
 // Define Yup validation schema
 const schema = yup.object({
   companyName: yup.string().required('Company Name is required').min(2, 'Company Name must be at least 2 characters').max(50, 'Company Name cannot exceed 50 characters'),
-  address: yup.string().required('Address is required').min(2, 'Address must be at least 2 characters').max(50, 'Address cannot exceed 50 characters')
+  address: yup.string().required('Address is required').min(2, 'Address must be at least 2 characters').max(50, 'Address cannot exceed 50 characters'),
+  telephoneNumber: yup.string()
 }).required();
 
 type Props = {
@@ -24,7 +25,7 @@ const CreateCompanyForm = ({ onClose }: Props) => {
 
   const submitHandler: SubmitHandler<CreateCompanyInputs> = (formValues) => {
     createCompany(formValues);
-reset();
+    reset();
   };
 
   if (isLoading) return <p>Loading...</p>;
@@ -42,6 +43,11 @@ reset();
           <label htmlFor="address">Address</label>
           <input type="text" id="address" {...register("address")} />
           {errors.address && <p>{errors.address.message}</p>}
+        </div>
+        <div className="formField">
+          <label htmlFor="telephoneNumber">Telephone Number</label>
+          <input type="text" id="telephoneNumber" {...register("telephoneNumber")} />
+          {errors.telephoneNumber && <p>{errors.telephoneNumber.message}</p>}
         </div>
         <button type="submit">Create Company</button>
         <button type="button" onClick={() => onClose(false)}>Cancel</button>
