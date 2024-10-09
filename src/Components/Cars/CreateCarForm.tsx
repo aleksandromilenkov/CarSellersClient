@@ -29,9 +29,10 @@ type Props = {
   onCloseModal?: () => void;
 };
 
-const optionsCarColors = Object.values(CarColor).filter(
-  (value) => isNaN(Number(value)) === true
+const optionsCarColors = Object.keys(CarColor).filter((value) =>
+  isNaN(Number(value))
 );
+
 const optionsCarTypes = Object.values(CarType).filter(
   (value) => isNaN(Number(value)) === true
 );
@@ -71,6 +72,12 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession, onCloseModal }: 
           )?.manufacturerID || null
         : null;
     }, [isEditSession, manufacturers, editingCar]);
+
+    const alreadySelectedCarColor = useMemo(()=>{
+      if(isEditSession)
+          return CarColor[(editingCarModel as Car)?.carColor].toString().toLowerCase();
+       return null;
+    },[isEditSession, editingCarModel])
   
     const [selectedManufacturer, setSelectedManufacturer] = useState<number | null>(alreadySelectedManufacturer);
     const [isSelectedManufacturer, setIsSelectedManufacturer] = useState<boolean>(true);
@@ -80,6 +87,9 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession, onCloseModal }: 
     console.log(alreadySelectedManufacturer)
     if(alreadySelectedManufacturer){
       determineTheSelectedCarModels(alreadySelectedManufacturer)
+    }
+    if(alreadySelectedCarColor){
+      setSelectedCarColor(alreadySelectedCarColor)
     }
   },[alreadySelectedManufacturer,carModels])
 
@@ -214,13 +224,39 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession, onCloseModal }: 
         carType: formValues.carType === "" ? undefined : formValues.carType,
       };
       console.log(filteredValues);
+      const formData = new FormData();
+      formData.append("companyID", formValues.companyID.toString());
+      formData.append("modelID", formValues.modelID.toString());
+      formData.append("year", formValues.year.toString());
+      formData.append("kilometers", formValues.kilometers.toString());
+      formData.append("price", formValues.price.toString());
+      if (formValues.carImage instanceof FileList && formValues.carImage.length > 0) {
+        const carImageFile = formValues.carImage[0]; // Get the first file from the FileList
+        formData.append("carImage", carImageFile); // Append the file
+      }
+      if(formValues?.carColor){
+        const carColorValue = filteredValues.carColor as CarColor;
+        formData.append("carColor", CarColor[carColorValue]);
+      }
+      if(formValues?.carOwner){
+        const carOwnerValue = filteredValues.carOwner as CarOwner;
+        formData.append("carOwner", CarColor[carOwnerValue]);
+      }
+      if(formValues?.carType){
+        const carTypeValue = filteredValues.carType as CarType;
+        formData.append("carType", CarType[carTypeValue]);
+      }
+      if(formValues?.carRegistration){
+        const carRegistrationValue = filteredValues.carRegistration as CarRegistration;
+        formData.append("carRegistration", CarRegistration[carRegistrationValue]);
+      }
       if (isEditSession && (editingCarModel as Car).carID) {
         const carID = (editingCarModel as Car).carID;
         editCar({ carInputs: filteredValues, carId: carID });
         onCloseModal && onCloseModal();
         
       } else {
-        createCar(filteredValues);
+        createCar(formData);
         setSelectedCarColor("transparent");
         reset()
         onCloseModal && onCloseModal();
@@ -228,7 +264,6 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession, onCloseModal }: 
     }
   };
   
-
   if (isLoading || isLoadingCompanies || isLoadingManufacturers || isLoadingCarModels || isLoadingEditCar)
     return <div>Loading...</div>;
   if (error || error2 || error3)
@@ -296,9 +331,14 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession, onCloseModal }: 
           {errors.price && <p>{errors.price.message}</p>}
         </div>
         <div className="formField">
+          <label htmlFor="carImage">Select Car Image</label>
+          <input type="file" id="carImage" {...register("carImage")} />
+          {errors.carImage && <p>{errors.carImage.message}</p>}
+        </div>
+        <div className="formField">
           <label htmlFor="carColor">Select Car Color</label>
           <div style={{backgroundColor:`${selectedCarColor ? selectedCarColor === "other" ? "transparent" : selectedCarColor  : "transparent"}`, width:'1rem', height:"1rem", borderRadius:"50%", border:"1px solid black" }}></div>
-          <select id="carColor" defaultValue={(editingCar as Car)?.carColor} {...register("carColor", {onChange:handleSelectCarColor})}>
+          <select id="carColor" defaultValue={"Black"}  {...register("carColor", {onChange:handleSelectCarColor})}>
             <option value="">Select Color</option>
             {optionsCarColors.map((option, index) => (
               <option key={index} value={option}>
@@ -310,10 +350,10 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession, onCloseModal }: 
         </div>
         <div className="formField">
           <label htmlFor="carType">Select Car Type</label>
-          <select id="carType" defaultValue={(editingCar as Car)?.carType} {...register("carType")} >
+          <select id="carType" defaultValue={CarType[(editingCar as Car)?.carType]} {...register("carType")} >
             <option value="">Select Type</option>
             {optionsCarTypes.map((option, index) => (
-              <option key={index} value={option} selected = {(editingCar as Car)?.carType == option} >
+              <option key={index} value={option} >
                 {option}
               </option>
             ))}

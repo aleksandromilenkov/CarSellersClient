@@ -12,6 +12,7 @@ const CarCompany = ({company}: Props) => {
     <div>
         <h1>{company.companyName}</h1>
         <h4>{company.address}</h4>
+        <h4>{company.telephoneNumber}</h4>
         <Link to={`/companies/${company.companyID}`}>View Company</Link>
     </div>
   )

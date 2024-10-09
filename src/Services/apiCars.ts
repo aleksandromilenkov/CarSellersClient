@@ -52,7 +52,7 @@ export const removeFavoriteCar = async (carId: number) => {
   }
 };
 
-export const createCarAPI = async (carInputs:CreateCarInputs) => {
+export const createCarAPI = async (carInputs:FormData) => {
   try {
     const response = await apiClient.post(`car`, carInputs);
     return response?.data;
