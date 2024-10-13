@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { CreateCarInputs } from "../../Utils/Helpers/Types";
 
 interface EditCarParams {
-  carInputs: CreateCarInputs;
+  carInputs: FormData;
   carId: number | string | undefined;
 }
 

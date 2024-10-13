@@ -8,13 +8,13 @@ function useDeleteCar() {
   const { mutate: deleteCar, isPending:isLoading } = useMutation({
     mutationFn: (carId:number)=>deleteCarAPI(carId),
     onSuccess: (data) => {
-      toast.success("Car created successfully.");
+      toast.success("Car deleted successfully.");
         queryClient.invalidateQueries({
             queryKey: ["cars"],
           });
     },
     onError: (error) => {
-      toast.error(`Create failed: ${error.message}`);
+      toast.error(`Deletion failed: ${error.message}`);
     },
   });
 

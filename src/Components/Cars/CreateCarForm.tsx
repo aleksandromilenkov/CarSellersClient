@@ -252,7 +252,7 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession, onCloseModal }: 
       }
       if (isEditSession && (editingCarModel as Car).carID) {
         const carID = (editingCarModel as Car).carID;
-        editCar({ carInputs: filteredValues, carId: carID });
+        editCar({ carInputs: formData, carId: carID });
         onCloseModal && onCloseModal();
         
       } else {

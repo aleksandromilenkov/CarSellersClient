@@ -54,14 +54,15 @@ export const removeFavoriteCar = async (carId: number) => {
 
 export const createCarAPI = async (carInputs:FormData) => {
   try {
+    console.log(carInputs)
     const response = await apiClient.post(`car`, carInputs);
     return response?.data;
   } catch (error: any) {
     console.log(error);
-    throw new Error(error.response?.data.message || error.message);
+    throw new Error(error.response?.data || error.message);
   }
 };
-export const editCarAPI = async (carInputs:CreateCarInputs, carId:number|string|undefined) => {
+export const editCarAPI = async (carInputs:FormData, carId:number|string|undefined) => {
   console.log(carInputs);
   console.log(carId);
   try {
