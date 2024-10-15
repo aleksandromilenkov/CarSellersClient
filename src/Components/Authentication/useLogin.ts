@@ -21,6 +21,7 @@ function useLogin() {
           token: user?.token, 
           username: user?.userName,
           email: user?.email,
+          profileImage: user?.profileImage,
         };
         dispatch(loginUser(userObj))
         toast.success("Login successfully.");

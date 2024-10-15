@@ -19,6 +19,7 @@ export type Car = {
   carColor: CarColor;
   carID: number;
   carSellerCompany: CarCompany;
+  carImage: string;
   carModel: any;
   kilometers: number;
   price: number;

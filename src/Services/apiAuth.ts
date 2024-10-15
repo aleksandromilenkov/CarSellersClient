@@ -33,6 +33,7 @@ interface LoginResponse {
   token: string;
   userName: string;
   email: string;
+  profileImage: string;
 }
 
 interface RegisterResponse {

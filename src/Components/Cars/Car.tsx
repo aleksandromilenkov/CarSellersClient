@@ -30,7 +30,7 @@ const Car = (props: ModelCar) => {
     const {isLoading: isLoadingRemovingFromFavorites, removeFromFavorites} = useRemoveFromFavoriteCars();
     const [isLoadingFavorites, favorites ] = useFavoriteCars();
     const {isLoading: isLoadingDelete, deleteCar } = useDeleteCar();
-    const {carModel,carOwner,carRegistration,carType,carColor,carID,carSellerCompany,kilometers,price,year} = props;
+    const {carModel,carOwner,carRegistration,carType,carColor,carID,carSellerCompany,kilometers,price,year, carImage} = props;
     const isThisCarAlreadyInFavorites = favorites?.find((favorite: ModelCar)=> favorite.carID === carID)
     const user = useSelector((state:RootState)=>state.user);
     const isAuthenticated = !!user.token;
@@ -43,6 +43,7 @@ const Car = (props: ModelCar) => {
   return (
     <div>
       <div>
+        <img src={`https://localhost:7209/resources/${carImage}`} alt="Car" />
         <h4>{carModel.manufacturer.manufacturerName} {carModel.modelName || carModel.carModel.modelName}</h4>
         {CarOwner[carOwner] && <p>Owner: {CarOwner[carOwner]}</p>}
         {CarRegistration[carRegistration] && <p>Registration: {CarRegistration[carRegistration]}</p>}

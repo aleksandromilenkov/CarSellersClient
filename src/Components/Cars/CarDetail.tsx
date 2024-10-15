@@ -10,6 +10,7 @@ const CarDetail = (props: Props) => {
   return (
     <div>
         <h1>{car?.carModel?.manufacturer.manufacturerName} {car?.carModel.modelName}</h1>
+        <img src={`https://localhost:7209/resources/${car.carImage}`} alt="Car" />
     </div>
   )
 }
