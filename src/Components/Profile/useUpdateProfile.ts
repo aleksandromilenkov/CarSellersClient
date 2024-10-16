@@ -14,6 +14,7 @@ function useUpdateProfile() {
       dispatch(updateCurrentUser({
         username: data.username,
         email: data.email,
+        profileImage: data?.profileImage,
       }));
     },
     onError: (error) => {

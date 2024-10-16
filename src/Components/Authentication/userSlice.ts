@@ -31,9 +31,10 @@ const userSlice = createSlice({
       state.email = null;
       state.profileImage = null;
     },
-    updateCurrentUser: (state, action: PayloadAction<{  username:string, email:string }>) => {
+    updateCurrentUser: (state, action: PayloadAction<{  username:string, email:string, profileImage:string | null }>) => {
         state.username = action.payload.username;
         state.email = action.payload.email;
+        state.profileImage = action.payload.profileImage;
       },
   },
 });

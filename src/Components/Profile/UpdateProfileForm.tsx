@@ -9,6 +9,7 @@ type Props = {};
 interface ProfileFormInputs {
   username: string;
   email: string;
+  profileImage: File | null;
   currentPassword: string;
   newPassword: string;
 }
@@ -21,7 +22,18 @@ const UpdateProfileForm: React.FC<Props> = (props: Props) => {
   const submitHandler: SubmitHandler<ProfileFormInputs> = async (formValues) => {
     const { username, email, currentPassword, newPassword } = formValues;
     try {
-      const updatedUser = await updateUser({ username, email, currentPassword, newPassword });
+      const formData = new FormData();
+      if(formValues?.username) formData.append("username", formValues.username.toString());
+      if(formValues?.email) formData.append("email", formValues.email.toString());
+      if(formValues?.currentPassword && formValues?.newPassword) {
+        formData.append("currentPassword", formValues.currentPassword.toString());
+        formData.append("newPassword", formValues.newPassword.toString());
+      }
+      if (formValues.profileImage instanceof FileList && formValues.profileImage.length > 0) {
+        const profileImageFile = formValues.profileImage[0]; // Get the first file from the FileList
+        formData.append("profileImage", profileImageFile); // Append the file
+      }
+      const updatedUser = await updateUser(formData);
       reset();
     } catch (error) {
       console.error("Update failed:", error);
@@ -51,6 +63,16 @@ const UpdateProfileForm: React.FC<Props> = (props: Props) => {
             id="email"
             placeholder="Email"
             {...register("email")}
+          />
+          {errors.email && <p>{errors.email.message}</p>}
+        </div>
+        <div className="formField">
+          <label htmlFor="profileImage">New Profile Picture</label>
+          <input
+            type="file"
+            id="profileImage"
+            placeholder="profileImage"
+            {...register("profileImage")}
           />
           {errors.email && <p>{errors.email.message}</p>}
         </div>

@@ -11,12 +11,14 @@ type RegisterFormInputs = {
   username: string;
   password: string;
   email:string;
+  profileImage?: File | null;
 };
 
 const validation = Yup.object().shape({
     username: Yup.string().required("Username is required"),
     password: Yup.string().required("Password is required"),
     email: Yup.string().required("Email is required"),
+
   });
 const RegisterForm = (props: Props) => {
     const { registerUser, isLoading } = useRegister();
@@ -26,12 +28,16 @@ const RegisterForm = (props: Props) => {
       handleSubmit,
       formState: { errors },
     } = useForm<RegisterFormInputs>({ resolver: yupResolver(validation) });
-    const handleRegister = (form: RegisterFormInputs) => {
-      const userName = form.username;
-      const password = form.password;
-      const email = form.email;
-      console.log(userName, password, email);
-      registerUser({ userName, email, password });
+    const handleRegister = (formValues: RegisterFormInputs) => {
+      const formData = new FormData();
+      formData.append("username", formValues.username.toString());
+      formData.append("email", formValues.email.toString());
+      formData.append("password", formValues.password.toString());
+      if (formValues.profileImage instanceof FileList && formValues.profileImage.length > 0) {
+        const profileImageFile = formValues.profileImage[0]; // Get the first file from the FileList
+        formData.append("profileImage", profileImageFile); // Append the file
+      }
+      registerUser(formData);
       reset()
     };
   return (
@@ -63,13 +69,33 @@ const RegisterForm = (props: Props) => {
         Email
       </label>
       <input
-        type="text"
+        type="email"
         id="email"
         placeholder="Email"
         {...register("email")}
       />
       {errors?.email ? (
         <p className="text-white">{errors.email.message}</p>
+      ) : (
+        ""
+      )}
+    </div>
+    <div>
+      <label
+        htmlFor="profileImage"
+        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >
+        Profile Image
+      </label>
+      <input
+        type="file"
+        id="profileImage"
+        placeholder="profileImage"
+        accept="image/jpeg,image/png,image/jpg"
+        {...register("profileImage")}
+      />
+      {errors?.profileImage ? (
+        <p className="text-white">{errors.profileImage.message}</p>
       ) : (
         ""
       )}

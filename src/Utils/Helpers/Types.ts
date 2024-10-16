@@ -36,7 +36,7 @@ export type CreateCarInputs = {
   year: number;
   kilometers: number;
   price: number;
-  carImage?: File
+  carImage?: File | null;
   carColor?: CarColor | string;  // Optional and can be enum or string
   carType?: CarType | string;    // Optional and can be enum or string
   carOwner?: CarOwner | string;  // Optional and can be enum or string

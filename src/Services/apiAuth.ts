@@ -51,6 +51,7 @@ interface UpdateUserInfo {
 interface UpdateUserResponse{
   username: string;
   email: string;
+  profileImage: string|null;
 }
 export async function getCurrentUser() {
   const user = localStorage.getItem("userCarSellers");
@@ -76,31 +77,27 @@ export async function loginAPI({
     );
     return response.data;
   } catch (error: any) {
-    // Handle error appropriately
     throw new Error(error.response?.data.message || error.message);
   }
 }
 
-export async function registerAPI({userName, email, password}: RegisterCredentials) : Promise<RegisterResponse> {
+export async function registerAPI(registerInputs: FormData) : Promise<RegisterResponse> {
   try{
     const response: AxiosResponse<RegisterResponse> = await axios.post(
       api + "account/register",
-      {
-        userName,
-        email,
-        password,
-      }
+registerInputs
     );
     return response.data;
   }catch(error:any){
       // Handle error appropriately
-      throw new Error(error.response?.data.message || error.message);
+      console.log(error)
+        throw new Error(error.response?.data[0].description || error.response?.data.message || error.message);
   }
 }
 
-export async function updateUserAPI({username,email, currentPassword, newPassword}: UpdateUserInfo) : Promise<UpdateUserResponse> {
+export async function updateUserAPI(userInputs:FormData) : Promise<UpdateUserResponse> {
   try{
-    const response = await apiClient.patch('account/update', {username, email, currentPassword, newPassword});
+    const response = await apiClient.patch('account/update', userInputs);
 
     console.log('User updated successfully:', response.data);
     return response?.data;
