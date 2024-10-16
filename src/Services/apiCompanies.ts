@@ -37,7 +37,7 @@ export const getCompany = async (companyId:string | undefined) => {
   }
 };
 
-export const createCompanyAPI = async (createCompanyInputs:CreateCompanyInputs) => {
+export const createCompanyAPI = async (createCompanyInputs:FormData) => {
   try {
     const response = await axios.post(api + `CarSellerCompany`, createCompanyInputs);
     return response?.data;

@@ -24,7 +24,15 @@ const CreateCompanyForm = ({ onClose }: Props) => {
   const { createCompany, isLoading, error } = useCreateCompany();
 
   const submitHandler: SubmitHandler<CreateCompanyInputs> = (formValues) => {
-    createCompany(formValues);
+    const formData = new FormData();
+      formData.append("companyName", formValues.companyName.toString());
+      formData.append("address", formValues.address.toString());
+      if(formValues?.telephoneNumber) formData.append("telephoneNumber", formValues.telephoneNumber.toString());
+      if (formValues.companyImage instanceof FileList && formValues.companyImage.length > 0) {
+        const companyImageFile = formValues.companyImage[0]; // Get the first file from the FileList
+        formData.append("companyImage", companyImageFile); // Append the file
+      }
+    createCompany(formData);
     reset();
   };
 
@@ -48,6 +56,17 @@ const CreateCompanyForm = ({ onClose }: Props) => {
           <label htmlFor="telephoneNumber">Telephone Number</label>
           <input type="text" id="telephoneNumber" {...register("telephoneNumber")} />
           {errors.telephoneNumber && <p>{errors.telephoneNumber.message}</p>}
+        </div>
+        <div className="formField">
+          <label htmlFor="companyImage">Company Image</label>
+          <input
+            type="file"
+            id="companyImage"
+            placeholder="companyImage"
+            accept="image/jpeg,image/png,image/jpg"
+            {...register("companyImage")}
+          />
+          {errors?.companyImage && <p>{errors.companyImage.message}</p>}
         </div>
         <button type="submit">Create Company</button>
         <button type="button" onClick={() => onClose(false)}>Cancel</button>

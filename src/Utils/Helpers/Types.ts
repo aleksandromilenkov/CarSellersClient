@@ -57,4 +57,5 @@ export type CreateCompanyInputs = {
   companyName: string;
   address:string;
   telephoneNumber?:string;
+  companyImage?: File | null;
 }

@@ -72,6 +72,7 @@ const UpdateProfileForm: React.FC<Props> = (props: Props) => {
             type="file"
             id="profileImage"
             placeholder="profileImage"
+            accept="image/jpeg,image/png,image/jpg"
             {...register("profileImage")}
           />
           {errors.email && <p>{errors.email.message}</p>}
