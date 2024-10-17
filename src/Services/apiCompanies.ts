@@ -48,3 +48,24 @@ export const createCompanyAPI = async (createCompanyInputs:FormData) => {
   }
 };
 
+export const editCompanyAPI = async (createCompanyInputs:FormData, companyId:string|number) => {
+  try {
+    const response = await axios.put(api + `CarSellerCompany/${companyId}`, createCompanyInputs);
+    return response?.data;
+  } catch (error: any) {
+    // Handle error appropriately
+    console.log(error);
+    throw new Error(error.response?.data.message || error.message);
+  }
+};
+
+export const deleteCompanyAPI = async (companyId:number) => {
+  try {
+    const response = await axios.delete(api + `CarSellerCompany/${companyId}`);
+    return response?.data;
+  } catch (error: any) {
+    // Handle error appropriately
+    console.log(error);
+    throw new Error(error.response?.data.message || error.message);
+  }
+};

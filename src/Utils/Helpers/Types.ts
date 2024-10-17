@@ -9,6 +9,7 @@ export type CarCompany ={
   companyName:string;
   address:string;
   telephoneNumber:string;
+  companyImage:string | null;
   cars: Car[];
 }
 
