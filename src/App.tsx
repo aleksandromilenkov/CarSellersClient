@@ -19,6 +19,10 @@ import FavoritesPage from "./Pages/FavoritesPage";
 import ProfilePage from "./Pages/ProfilePage";
 import ProtectedAdminRoute from "./Utils/Helpers/ProtectedAdminRoute";
 import AdminPanelPage from "./Pages/AdminPanelPage";
+import AboutPage from "./Pages/AboutPage";
+import ContactPage from "./Pages/ContactPage";
+import PrivacyPolicyPage from "./Pages/PrivacyPolicyPage";
+import TermsOfServicePage from "./Pages/TermsPage";
 type Props = {};
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,6 +42,10 @@ const App = (props: Props) => {
             <Route index element={<Navigate replace to="home" />} />
             <Route path="home" element={<HomePage />} />
             <Route path="search" element={<SearchPage />} />
+            <Route path="about" element={<AboutPage />} />
+            <Route path="contact" element={<ContactPage />} />
+            <Route path="privacyPolicy" element={<PrivacyPolicyPage />} />
+            <Route path="terms" element={<TermsOfServicePage />} />
             <Route path="cars/:carId" element={<CarDetail />} />
             <Route path="companies" element={<CompaniesPage />} />
             <Route path="companies/:companyId" element={<CarCompanyDetail />} />

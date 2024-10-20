@@ -1,21 +1,28 @@
 import React from "react";
-import styled from "styled-components";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import Footer from "./Footer";
+import styled from 'styled-components';
+
+const StyledAppLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full height of the viewport */
+`;
+
+const MainContent = styled.main`
+  flex: 1; /* Takes up remaining space */
+`;
+
 type Props = {};
-const StyledAppLayout = styled.div``;
 const AppLayout = (props: Props) => {
-  const user = useSelector((store:RootState)=>store.user);
-  const isAuthorized = !!user.token;
   return (
     <StyledAppLayout>
-      {isAuthorized && <h3>Welcome, {user.username}</h3>}
       <Navbar />
-      <main>
+      <MainContent>
         <Outlet />
-      </main>
+      </MainContent>
+      <Footer/>
     </StyledAppLayout>
   );
 };
