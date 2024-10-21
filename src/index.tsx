@@ -7,6 +7,7 @@ import ErrorFallback from "./Utils/Helpers/ErrorFallback";
 import { Provider } from "react-redux";
 import { PersistGate } from 'redux-persist/integration/react';
 import store,{ persistor } from "./store";
+import GlobalStyle from "./UI/GlobalStyle";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -19,6 +20,7 @@ root.render(
       FallbackComponent={ErrorFallback}
       onReset={() => window.location.replace("/")}
       >
+      <GlobalStyle/>
       <App />
     </ErrorBoundary>
         </PersistGate>

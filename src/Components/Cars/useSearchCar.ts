@@ -6,9 +6,6 @@ import { useSearchParams } from "react-router-dom";
 
 const useSearchCar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log("WE");
-  // Filter
-  console.log(searchParams);
   const paramsObject = Object.fromEntries(searchParams.entries());
   const {
     isLoading,
