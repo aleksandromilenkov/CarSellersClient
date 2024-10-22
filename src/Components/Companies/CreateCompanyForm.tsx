@@ -6,6 +6,28 @@ import { CreateCompanyInputs } from "../../Utils/Helpers/Types";
 import useCreateCompany from "./useCreateCompany";
 import useEditCompany from "./useEditCompany";
 import { Company } from "../../Models/Company";
+import { FormContainer } from "../../UI/FormContainer";
+import { FormTitle } from "../../UI/FormTitle";
+import { FormField } from "../../UI/FormField";
+import { Label } from "../../UI/Label";
+import { Select } from "../../UI/Select";
+import { Input } from "../../UI/Input";
+import { ErrorMessage } from "../../UI/ErrorMessage";
+import styled from "styled-components";
+const Button = styled.button`
+  background-color: #007bff; /* Button color */
+  color: white; /* Text color */
+  padding: 10px 15px; /* Padding */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  margin-right: 10px; /* Space between buttons */
+  transition: background-color 0.3s; /* Smooth transition for hover */
+
+  &:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+`;
 
 // Define Yup validation schema
 const schema = yup.object({
@@ -54,44 +76,50 @@ const CreateCompanyForm = ({ onClose, isEditSession, editingCompany = {}, onClos
   if (isLoading) return <p>Loading...</p>;
   
   return (
-      <div>
-      <h2>{isEditSession ? "Edit Company" : "Create Company"}</h2>
+    <FormContainer>
+      <FormTitle>{isEditSession ? "Edit Company" : "Create Company"}</FormTitle>
       <form onSubmit={handleSubmit(submitHandler)}>
-      <div className="formField">
-          <label htmlFor="companyName">Company Name</label>
-          <input type="text" id="companyName" {...register("companyName")} />
-          {errors.companyName && <p>{errors.companyName.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="address">Address</label>
-          <input type="text" id="address" {...register("address")} />
-          {errors.address && <p>{errors.address.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="telephoneNumber">Telephone Number</label>
-          <input type="text" id="telephoneNumber" {...register("telephoneNumber")} />
-          {errors.telephoneNumber && <p>{errors.telephoneNumber.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="companyImage">Company Image</label>
-          <input
+        
+        <FormField>
+          <Label htmlFor="companyName">Company Name</Label>
+          <Input type="text" id="companyName" {...register("companyName")} />
+          {errors.companyName && <ErrorMessage>{errors.companyName.message}</ErrorMessage>}
+        </FormField>
+
+        <FormField>
+          <Label htmlFor="address">Address</Label>
+          <Input type="text" id="address" {...register("address")} />
+          {errors.address && <ErrorMessage>{errors.address.message}</ErrorMessage>}
+        </FormField>
+
+        <FormField>
+          <Label htmlFor="telephoneNumber">Telephone Number</Label>
+          <Input type="text" id="telephoneNumber" {...register("telephoneNumber")} />
+          {errors.telephoneNumber && <ErrorMessage>{errors.telephoneNumber.message}</ErrorMessage>}
+        </FormField>
+
+        <FormField>
+          <Label htmlFor="companyImage">Company Image</Label>
+          <Input
             type="file"
             id="companyImage"
-            placeholder="companyImage"
             accept="image/jpeg,image/png,image/jpg"
             {...register("companyImage")}
           />
-          {errors?.companyImage && <p>{errors.companyImage.message}</p>}
+          {errors.companyImage && <ErrorMessage>{errors.companyImage.message}</ErrorMessage>}
+        </FormField>
+
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button type="submit">{isEditSession ? "Edit Company" : "Create Company"}</Button>
+          <Button type="button" onClick={() => {
+            onClose && onClose(false);
+            onCloseModal && onCloseModal();
+          }}>Cancel</Button>
         </div>
-        <button type="submit">{isEditSession ? "Edit Company" : "Create Company"}</button>
-        <button type="button" onClick={() =>{
-          onClose && onClose(false);
-          onCloseModal && onCloseModal();
-        } 
-        }>Cancel</button>
       </form>
-      {(error ) && <p>{error?.message }</p> }
-    </div>
+
+      {error && <ErrorMessage>{error.message}</ErrorMessage>}
+    </FormContainer>
   );
 };
 

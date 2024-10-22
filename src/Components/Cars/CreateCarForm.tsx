@@ -17,7 +17,72 @@ import { Company } from "../../Models/Company";
 import useEditCar from "./useEditCar";
 import { Car } from "../../Models/Car";
 import { useMemo } from "react";
+import styled from 'styled-components';
 
+const FormContainer = styled.div`
+  background-color: #f8f9fa; /* Light background */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px; /* Padding inside the form */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  max-width: 600px; /* Max width for the form */
+  margin: 20px auto; /* Center the form */
+`;
+
+const FormTitle = styled.h2`
+  text-align: center; /* Center the title */
+  color: #333; /* Darker color for the title */
+`;
+
+const FormField = styled.div`
+  margin-bottom: 15px; /* Space between fields */
+`;
+
+const Label = styled.label`
+  display: block; /* Label takes full width */
+  margin-bottom: 5px; /* Space below label */
+  font-weight: bold; /* Bold label */
+`;
+
+const Select = styled.select`
+  width: 100%; /* Full width */
+  padding: 10px; /* Padding inside select */
+  border: 1px solid #ccc; /* Border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size */
+`;
+
+const Input = styled.input`
+  width: 100%; /* Full width */
+  padding: 10px; /* Padding inside input */
+  border: 1px solid #ccc; /* Border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size */
+`;
+
+const ErrorMessage = styled.p`
+  color: red; /* Red for error messages */
+  font-size: 14px; /* Font size for error messages */
+`;
+
+const Button = styled.button`
+  background-color: #007bff; /* Button color */
+  color: white; /* Text color */
+  padding: 10px 15px; /* Padding */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  margin-right: 10px; /* Space between buttons */
+  transition: background-color 0.3s; /* Smooth transition for hover */
+
+  &:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+
+  &:disabled {
+    background-color: #ccc; /* Disable button background */
+    cursor: not-allowed; /* Not allowed cursor */
+  }
+`;
 // Define form validation functions
 const validateYear = (year: number) => year >= 1900;
 const validatePositiveNumber = (value: number) => value > 0;
@@ -230,26 +295,32 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession, onCloseModal }: 
       formData.append("year", formValues.year.toString());
       formData.append("kilometers", formValues.kilometers.toString());
       formData.append("price", formValues.price.toString());
+
       if (formValues.carImage instanceof FileList && formValues.carImage.length > 0) {
         const carImageFile = formValues.carImage[0]; // Get the first file from the FileList
         formData.append("carImage", carImageFile); // Append the file
       }
+
       if(formValues?.carColor){
         const carColorValue = filteredValues.carColor as CarColor;
         formData.append("carColor", CarColor[carColorValue]);
       }
+
       if(formValues?.carOwner){
         const carOwnerValue = filteredValues.carOwner as CarOwner;
-        formData.append("carOwner", CarColor[carOwnerValue]);
+        formData.append("carOwner", CarOwner[carOwnerValue]);
       }
+
       if(formValues?.carType){
         const carTypeValue = filteredValues.carType as CarType;
         formData.append("carType", CarType[carTypeValue]);
       }
+
       if(formValues?.carRegistration){
         const carRegistrationValue = filteredValues.carRegistration as CarRegistration;
         formData.append("carRegistration", CarRegistration[carRegistrationValue]);
       }
+      
       if (isEditSession && (editingCarModel as Car).carID) {
         const carID = (editingCarModel as Car).carID;
         editCar({ carInputs: formData, carId: carID });
@@ -270,128 +341,149 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession, onCloseModal }: 
     return <div>Error: {error.message || error2.message || error3.message}</div>;
 
   return (
-    <div>
-      <h2>{isEditSession ? "Edit Car" : "Create Car"}</h2>
+    <FormContainer>
+      <FormTitle>{isEditSession ? "Edit Car" : "Create Car"}</FormTitle>
       <form onSubmit={handleSubmit(submitHandler)}>
-        <div className="formField">
-          <label htmlFor="companyID">Select Car Company</label>
-          <select id="companyID" {...register("companyID")}>
+        <FormField>
+          <Label htmlFor="companyID">Select Car Company</Label>
+          <Select id="companyID" {...register("companyID")}>
             <option value="">Select Company</option>
             {companies?.map((option: Company, index: number) => (
               <option key={index} value={option.companyID}>
                 {option.companyName}
               </option>
             ))}
-          </select>
-          {errors.companyID && <p>{errors.companyID.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="manufacturer">Select Manufacturer</label>
-          <select id="manufacturer" onChange={handleManufacturerChange} defaultValue={isEditSession && alreadySelectedManufacturer.manufacturerID}>
+          </Select>
+          {errors.companyID && <ErrorMessage>{errors.companyID.message}</ErrorMessage>}
+        </FormField>
+
+        <FormField>
+          <Label htmlFor="manufacturer">Select Manufacturer</Label>
+          <Select
+            id="manufacturer"
+            onChange={handleManufacturerChange}
+            defaultValue={isEditSession && alreadySelectedManufacturer.manufacturerID}
+          >
             <option value="">Select Manufacturer</option>
             {manufacturers?.map((option: Manufacturer, index: number) => (
-              <option key={index} value={option.manufacturerID} selected = {option.manufacturerID === alreadySelectedManufacturer}>
+              <option key={index} value={option.manufacturerID}>
                 {option.manufacturerName}
               </option>
             ))}
-          </select>
-          {!isSelectedManufacturer && <p>Please select Manufacturer</p>}
-        </div>
-        {!selectedManufacturer ? "" : <div className="formField">
-          <label htmlFor="modelID">Select Car Model</label>
-          <select id="modelID" defaultValue={isEditSession && (editingCar as Car)?.carModel?.modelID} {...register('modelID', {
-    onChange: handleSelectCarModel
-  })}>
-    <option value={""}>Select Car Model</option>
-            {selectedCarModels?.map((option: CarModel, index: number) => (
-              <option key={index} value={option.modelID} selected = {isEditSession && option.modelID === (editingCar as Car)?.carModel.modelID}>
-                {option.modelName}
-              </option>
-            ))}
-          </select>
-        </div>}
-          {errors.modelID && <p>{errors.modelID.message}</p>}
-        <div className="formField">
-          <label htmlFor="year">Car Year</label>
-          <input type="number" id="year" {...register("year")} />
-          {errors.year && <p>{errors.year.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="kilometers">Kilometers</label>
-          <input
-            type="number"
-            id="kilometers"
-            {...register("kilometers")}
-          />
-          {errors.kilometers && <p>{errors.kilometers.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="price">Price</label>
-          <input type="number" id="price" {...register("price")} />
-          {errors.price && <p>{errors.price.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="carImage">Select Car Image</label>
-          <input type="file" id="carImage" {...register("carImage")} />
-          {errors.carImage && <p>{errors.carImage.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="carColor">Select Car Color</label>
-          <div style={{backgroundColor:`${selectedCarColor ? selectedCarColor === "other" ? "transparent" : selectedCarColor  : "transparent"}`, width:'1rem', height:"1rem", borderRadius:"50%", border:"1px solid black" }}></div>
-          <select id="carColor" defaultValue={"Black"}  {...register("carColor", {onChange:handleSelectCarColor})}>
+          </Select>
+        </FormField>
+
+        {/* Conditional rendering for Car Model */}
+        {selectedManufacturer && (
+          <FormField>
+            <Label htmlFor="modelID">Select Car Model</Label>
+            <Select
+              id="modelID"
+              defaultValue={isEditSession && (editingCar as Car)?.carModel?.modelID}
+              {...register('modelID', { onChange: handleSelectCarModel })}
+            >
+              <option value="">Select Car Model</option>
+              {selectedCarModels?.map((option, index) => (
+                <option key={index} value={option.modelID}>
+                  {option.modelName}
+                </option>
+              ))}
+            </Select>
+            {errors.modelID && <ErrorMessage>{errors.modelID.message}</ErrorMessage>}
+          </FormField>
+        )}
+
+        <FormField>
+          <Label htmlFor="year">Car Year</Label>
+          <Input type="number" id="year" {...register("year")} />
+          {errors.year && <ErrorMessage>{errors.year.message}</ErrorMessage>}
+        </FormField>
+
+        <FormField>
+          <Label htmlFor="kilometers">Kilometers</Label>
+          <Input type="number" id="kilometers" {...register("kilometers")} />
+          {errors.kilometers && <ErrorMessage>{errors.kilometers.message}</ErrorMessage>}
+        </FormField>
+
+        <FormField>
+          <Label htmlFor="price">Price</Label>
+          <Input type="number" id="price" {...register("price")} />
+          {errors.price && <ErrorMessage>{errors.price.message}</ErrorMessage>}
+        </FormField>
+
+        <FormField>
+          <Label htmlFor="carImage">Select Car Image</Label>
+          <Input type="file" id="carImage" {...register("carImage")} />
+          {errors.carImage && <ErrorMessage>{errors.carImage.message}</ErrorMessage>}
+        </FormField>
+
+        <FormField>
+          <Label htmlFor="carColor">Select Car Color</Label>
+          <div style={{
+            backgroundColor: `${selectedCarColor ? selectedCarColor === "other" ? "transparent" : selectedCarColor : "transparent"}`,
+            width: '1rem',
+            height: "1rem",
+            borderRadius: "50%",
+            border: "1px solid black"
+          }}></div>
+          <Select id="carColor" defaultValue="Black" {...register("carColor", { onChange: handleSelectCarColor })}>
             <option value="">Select Color</option>
             {optionsCarColors.map((option, index) => (
               <option key={index} value={option}>
                 {option}
               </option>
             ))}
-          </select>
-          {errors.carColor && <p>{errors.carColor.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="carType">Select Car Type</label>
-          <select id="carType" defaultValue={CarType[(editingCar as Car)?.carType]} {...register("carType")} >
+          </Select>
+          {errors.carColor && <ErrorMessage>{errors.carColor.message}</ErrorMessage>}
+        </FormField>
+
+        <FormField>
+          <Label htmlFor="carType">Select Car Type</Label>
+          <Select id="carType" defaultValue={CarType[(editingCar as Car)?.carType]} {...register("carType")}>
             <option value="">Select Type</option>
             {optionsCarTypes.map((option, index) => (
-              <option key={index} value={option} >
+              <option key={index} value={option}>
                 {option}
               </option>
             ))}
-          </select>
-          {errors.carType && <p>{errors.carType.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="carOwner">Select Car Owner</label>
-          <select id="carOwner" defaultValue={(editingCar as Car)?.carOwner} {...register("carOwner")} >
+          </Select>
+          {errors.carType && <ErrorMessage>{errors.carType.message}</ErrorMessage>}
+        </FormField>
+
+        <FormField>
+          <Label htmlFor="carOwner">Select Car Owner</Label>
+          <Select id="carOwner" defaultValue={(editingCar as Car)?.carOwner} {...register("carOwner")}>
             <option value="">Select Owner</option>
             {optionsCarOwner.map((option, index) => (
               <option key={index} value={option}>
                 {option}
               </option>
             ))}
-          </select>
-          {errors.carOwner && <p>{errors.carOwner.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="carRegistration">Select Car Registration</label>
-          <select id="carRegistration" {...register("carRegistration")} defaultValue={(editingCar as Car)?.carRegistration}>
+          </Select>
+          {errors.carOwner && <ErrorMessage>{errors.carOwner.message}</ErrorMessage>}
+        </FormField>
+
+        <FormField>
+          <Label htmlFor="carRegistration">Select Car Registration</Label>
+          <Select id="carRegistration" {...register("carRegistration")} defaultValue={(editingCar as Car)?.carRegistration}>
             <option value="">Select Registration</option>
             {optionsCarRegistration.map((option, index) => (
               <option key={index} value={option}>
                 {option}
               </option>
             ))}
-          </select>
-          {errors.carRegistration && <p>{errors.carRegistration.message}</p>}
+          </Select>
+          {errors.carRegistration && <ErrorMessage>{errors.carRegistration.message}</ErrorMessage>}
+        </FormField>
+
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button type="submit" disabled={!selectedManufacturer}>{isEditSession ? "Edit Car" : "Create Car"}</Button>
+          <Button type="button" onClick={() => {
+            onClose && onClose(false);
+          }}>Cancel</Button>
         </div>
-        <button type="submit" disabled={!isSelectedManufacturer}>{isEditSession ? "Edit Car" : "Create Car"}</button>
-        <button type="button" onClick={() =>{
-          onClose && onClose(false);
-          onCloseModal && onCloseModal();
-        } 
-        }>Cancel</button>
       </form>
-    </div>
+    </FormContainer>
   );
 };
 
