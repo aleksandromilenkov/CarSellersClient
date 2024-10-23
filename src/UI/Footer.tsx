@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import 'font-awesome/css/font-awesome.min.css';
 
-
 const FooterContainer = styled.footer`
-  width:100%;
+  width: 100%;
   background-color: #282c34;
   color: white;
   padding: 20px;
@@ -14,14 +13,24 @@ const FooterContainer = styled.footer`
   text-align: center;
 `;
 
+const Logo = styled.img`
+  width: 150px; /* Adjust size as needed */
+  height: auto;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    width: 120px; /* Responsive adjustment */
+  }
+`;
+
 const FooterLinks = styled.div`
   margin: 10px 0;
-  
+
   a {
     color: #61dafb;
     text-decoration: none;
     margin: 0 15px;
-    
+
     &:hover {
       text-decoration: underline;
     }
@@ -30,7 +39,7 @@ const FooterLinks = styled.div`
 
 const SocialMedia = styled.div`
   margin: 10px 0;
-  
+
   a {
     margin: 0 10px;
     color: white;
@@ -49,6 +58,7 @@ const Copyright = styled.p`
 const Footer = () => {
   return (
     <FooterContainer>
+      <Logo src="https://localhost:7209/resources/CarSellersLogo.png" alt="Company Logo" />
       <FooterLinks>
         <a href="/about">About Us</a>
         <a href="/contact">Contact</a>
@@ -56,15 +66,15 @@ const Footer = () => {
         <a href="/terms">Terms of Service</a>
       </FooterLinks>
       <SocialMedia>
-      <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-      <i className="fa fa-facebook" aria-hidden="true"></i>
-    </a>
-    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-      <i className="fa fa-instagram" aria-hidden="true"></i>
-    </a>
-    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-      <i className="fa fa-twitter" aria-hidden="true"></i>
-    </a>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+          <i className="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <i className="fa fa-instagram" aria-hidden="true"></i>
+        </a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+          <i className="fa fa-twitter" aria-hidden="true"></i>
+        </a>
       </SocialMedia>
       <Copyright>© 2024 Car Sellers Page. All rights reserved.</Copyright>
     </FooterContainer>
