@@ -3,6 +3,11 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import useUpdateProfile from './useUpdateProfile';
 import { useDispatch } from 'react-redux';
 import { updateCurrentUser } from '../Authentication/userSlice';
+import { FormField } from '../../UI/FormField';
+import { Label } from '../../UI/Label';
+import { Input } from '../../UI/Input';
+import { ErrorMessage } from '../../UI/ErrorMessage';
+import { SubmitButton } from '../../UI/SubmitButton';
 
 type Props = {};
 
@@ -44,62 +49,36 @@ const UpdateProfileForm: React.FC<Props> = (props: Props) => {
 
   return (
     <div>
-      <h2>Update Profile</h2>
-      <form onSubmit={handleSubmit(submitHandler)}>
-        <div className="formField">
-          <label htmlFor="username">New Username</label>
-          <input
-            type="text"
-            id="username"
-            placeholder="Username"
-            {...register("username")}
-          />
-          {errors.username && <p>{errors.username.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="email">New Email</label>
-          <input
-            type="email"
-            id="email"
-            placeholder="Email"
-            {...register("email")}
-          />
-          {errors.email && <p>{errors.email.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="profileImage">New Profile Picture</label>
-          <input
-            type="file"
-            id="profileImage"
-            placeholder="profileImage"
-            accept="image/jpeg,image/png,image/jpg"
-            {...register("profileImage")}
-          />
-          {errors.email && <p>{errors.email.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="currentPassword">Current Password</label>
-          <input
-            type="password"
-            id="currentPassword"
-            placeholder="Current Password"
-            {...register("currentPassword")}
-          />
-          {errors.currentPassword && <p>{errors.currentPassword.message}</p>}
-        </div>
-        <div className="formField">
-          <label htmlFor="newPassword">New Password</label>
-          <input
-            type="password"
-            id="newPassword"
-            placeholder="New Password"
-            {...register("newPassword")}
-          />
-          {errors.newPassword && <p>{errors.newPassword.message}</p>}
-        </div>
-        <button type="submit">Update User Info</button>
-      </form>
-    </div>
+    <h2>Update Profile</h2>
+    <form onSubmit={handleSubmit(submitHandler)}>
+      <FormField>
+        <Label htmlFor="username">New Username</Label>
+        <Input type="text" id="username" placeholder="Username" {...register("username")} />
+        {errors.username && <ErrorMessage>{errors.username.message}</ErrorMessage>}
+      </FormField>
+      <FormField>
+        <Label htmlFor="email">New Email</Label>
+        <Input type="email" id="email" placeholder="Email" {...register("email")} />
+        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+      </FormField>
+      <FormField>
+        <Label htmlFor="profileImage">New Profile Picture</Label>
+        <Input type="file" id="profileImage" accept="image/jpeg,image/png,image/jpg" {...register("profileImage")} />
+        {errors.profileImage && <ErrorMessage>{errors.profileImage.message}</ErrorMessage>}
+      </FormField>
+      <FormField>
+        <Label htmlFor="currentPassword">Current Password</Label>
+        <Input type="password" id="currentPassword" placeholder="Current Password" {...register("currentPassword")} />
+        {errors.currentPassword && <ErrorMessage>{errors.currentPassword.message}</ErrorMessage>}
+      </FormField>
+      <FormField>
+        <Label htmlFor="newPassword">New Password</Label>
+        <Input type="password" id="newPassword" placeholder="New Password" {...register("newPassword")} />
+        {errors.newPassword && <ErrorMessage>{errors.newPassword.message}</ErrorMessage>}
+      </FormField>
+      <SubmitButton type="submit">Update User Info</SubmitButton>
+    </form>
+  </div>
   );
 };
 

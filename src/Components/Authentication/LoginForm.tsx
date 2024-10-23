@@ -4,8 +4,18 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useLogin from "./useLogin";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { FormField } from "../../UI/FormField";
+import { Label } from "../../UI/Label";
+import { Input } from "../../UI/Input";
+import { ErrorMessage } from "../../UI/ErrorMessage";
+import { SubmitButton } from "../../UI/SubmitButton";
+import { FormWrapper } from "../../UI/FormWrapper";
+import { ForgotPasswordLink } from "../../UI/ForgotPasswordLink";
+import { RegisterLink } from "../../UI/RegisterLink";
 
 type Props = {};
+
 type LoginFormsInputs = {
   username: string;
   password: string;
@@ -15,6 +25,7 @@ const validation = Yup.object().shape({
   username: Yup.string().required("Username is required"),
   password: Yup.string().required("Password is required"),
 });
+
 const LoginForm = (props: Props) => {
   const { login, isLoading } = useLogin();
   const {
@@ -31,44 +42,25 @@ const LoginForm = (props: Props) => {
     reset()
   };
   return (
+    <FormWrapper>
     <form onSubmit={handleSubmit(handleLogin)}>
-      <div>
-        <label
-          htmlFor="username"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Username
-        </label>
-        <input
-          type="text"
-          id="username"
-          placeholder="Username"
-          {...register("username")}
-        />
-        {errors?.username ? (
-          <p className="text-white">{errors.username.message}</p>
-        ) : (
-          ""
-        )}
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="••••••••"
-          {...register("password")}
-        />
-        {errors?.password ? <p>{errors.password.message}</p> : ""}
-      </div>
-      <div>
-        <a href="#">Forgot password?</a>
-      </div>
-      <button type="submit">Sign in</button>
-      <p>
+      <FormField>
+        <Label htmlFor="username">Username</Label>
+        <Input type="text" id="username" placeholder="Username" {...register("username")} />
+        {errors?.username && <ErrorMessage>{errors.username.message}</ErrorMessage>}
+      </FormField>
+      <FormField>
+        <Label htmlFor="password">Password</Label>
+        <Input type="password" id="password" placeholder="••••••••" {...register("password")} />
+        {errors?.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
+      </FormField>
+      <ForgotPasswordLink href="#">Forgot password?</ForgotPasswordLink>
+      <SubmitButton type="submit">Sign in</SubmitButton>
+      <RegisterLink>
         Don’t have an account yet? <Link to="/register">Register here</Link>
-      </p>
+      </RegisterLink>
     </form>
+  </FormWrapper>
   );
 };
 

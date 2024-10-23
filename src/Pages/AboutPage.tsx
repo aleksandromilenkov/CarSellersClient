@@ -57,17 +57,17 @@ const MemberCard = styled.div`
   }
 
   p {
-    color: #555;
+    color: #222;
     font-size: 0.9rem;
   }
 `;
 
 const AboutPage = () => {
   const teamMembers = [
-    { name: 'Alice Johnson', role: 'CEO' },
-    { name: 'Bob Smith', role: 'Sales Manager' },
-    { name: 'Carol Williams', role: 'Marketing Director' },
-    { name: 'David Brown', role: 'Customer Support' },
+    { name: 'Aleksandro Milenkov', role: 'CEO' },
+    { name: 'Martin Zdravkovski', role: 'Sales Manager' },
+    { name: 'Stefan Jakimovski', role: 'Marketing Director' },
+    { name: 'Simona Hristova', role: 'Customer Support' },
   ];
 
   return (

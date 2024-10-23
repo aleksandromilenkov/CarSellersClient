@@ -5,6 +5,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import useLogin from "./useLogin";
 import useRegister from './useRegister';
 import { Link } from 'react-router-dom';
+import { SubmitButton } from '../../UI/SubmitButton';
+import { Label } from '../../UI/Label';
+import { Input } from '../../UI/Input';
+import { FormField } from '../../UI/FormField';
+import { FormWrapper } from '../../UI/FormWrapper';
+import { RegisterLink } from '../../UI/RegisterLink';
 
 type Props = {};
 type RegisterFormInputs = {
@@ -41,15 +47,16 @@ const RegisterForm = (props: Props) => {
       reset()
     };
   return (
+    <FormWrapper>
     <form onSubmit={handleSubmit(handleRegister)}>
-    <div>
-      <label
+    <FormField>
+      <Label
         htmlFor="username"
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
         Username
-      </label>
-      <input
+      </Label>
+      <Input
         type="text"
         id="username"
         placeholder="Username"
@@ -60,15 +67,15 @@ const RegisterForm = (props: Props) => {
       ) : (
         ""
       )}
-    </div>
-    <div>
-      <label
+    </FormField>
+    <FormField>
+      <Label
         htmlFor="email"
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
         Email
-      </label>
-      <input
+      </Label>
+      <Input
         type="email"
         id="email"
         placeholder="Email"
@@ -79,15 +86,15 @@ const RegisterForm = (props: Props) => {
       ) : (
         ""
       )}
-    </div>
-    <div>
-      <label
+    </FormField>
+    <FormField>
+      <Label
         htmlFor="profileImage"
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
         Profile Image
-      </label>
-      <input
+      </Label>
+      <Input
         type="file"
         id="profileImage"
         placeholder="profileImage"
@@ -99,25 +106,26 @@ const RegisterForm = (props: Props) => {
       ) : (
         ""
       )}
-    </div>
-    <div>
-      <label htmlFor="password">Password</label>
-      <input
+    </FormField>
+    <FormField>
+      <Label htmlFor="password">Password</Label>
+      <Input
         type="password"
         id="password"
         placeholder="••••••••"
         {...register("password")}
       />
       {errors?.password ? <p>{errors.password.message}</p> : ""}
-    </div>
-    <div>
+    </FormField>
+    <FormField>
       <a href="#">Forgot password?</a>
-    </div>
-    <button type="submit">Sign up</button>
-    <p>
+    </FormField>
+    <SubmitButton type="submit">Sign up</SubmitButton>
+    <RegisterLink>
       Don’t have an account yet? <Link to="/login">Login here</Link>
-    </p>
+    </RegisterLink>
   </form>
+  </FormWrapper>
   )
 }
 
