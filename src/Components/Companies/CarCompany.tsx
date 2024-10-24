@@ -102,7 +102,7 @@ const CarCompany = ({company}: Props) => {
               <Modal.Window name="delete-car">
                 <ConfirmDelete
                   onConfirm={()=>deleteCompany(company.companyID)}
-                  resourceName={`Delete company ${company.companyName} ?`}
+                  resourceName={`company ${company.companyName} ?`}
                 />
               </Modal.Window>
             </Modal>

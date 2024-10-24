@@ -51,7 +51,7 @@ const LogoutButton = styled.button`
   }
 `;
 
-const BurgerMenu = styled.div`
+const BurgerMenu = styled.div<{ isOpen: boolean }>`
   display: none;
   flex-direction: column;
   cursor: pointer;
@@ -62,6 +62,15 @@ const BurgerMenu = styled.div`
     background-color: white;
     margin: 4px 0;
     transition: 0.4s;
+    transform: ${({ isOpen }) => (isOpen ? "rotate(45deg) translate(5px, 5px)" : "none")};
+  }
+
+  div:nth-child(2) {
+    opacity: ${({ isOpen }) => (isOpen ? "0" : "1")};
+  }
+
+  div:nth-child(3) {
+    transform: ${({ isOpen }) => (isOpen ? "rotate(-45deg) translate(5px, -5px)" : "none")};
   }
 
   @media (max-width: 768px) {
@@ -72,7 +81,7 @@ const BurgerMenu = styled.div`
 const MenuItems = styled.div<{ isOpen: boolean }>`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   position: absolute;
   top: 60px;
   left: 0;
@@ -80,7 +89,7 @@ const MenuItems = styled.div<{ isOpen: boolean }>`
   width: 100%;
   transition: max-height 0.3s ease;
   overflow: hidden;
-  max-height: ${({ isOpen }) => (isOpen ? "300px" : "0")}; /* Adjust max height */
+  max-height: ${({ isOpen }) => (isOpen ? "300px" : "0")};
   z-index: 1;
 
   @media (min-width: 769px) {
@@ -98,13 +107,13 @@ const LogoContainer = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 150px; /* Adjust the width as needed */
+  width: 150px;
   height: auto;
   max-width: 100%;
-  border-radius:50%;
-  
+  border-radius: 50%;
+
   @media (max-width: 768px) {
-    width: 120px; /* Responsive size for smaller screens */
+    width: 120px;
   }
 `;
 
@@ -129,29 +138,34 @@ const Navbar = (props: Props) => {
     navigate("/login");
   };
 
+  // Function to close the menu when a link is clicked
+  const handleNavLinkClick = () => {
+    setIsOpen(false);
+  };
+
   return (
     <StyledHeaderMenu>
-       <LogoContainer>
+      <LogoContainer>
         <Logo src="https://localhost:7209/resources/CarSellersLogo.png" alt="logo" />
       </LogoContainer>
-      <BurgerMenu onClick={() => setIsOpen(!isOpen)}>
+      <BurgerMenu isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
         <div />
         <div />
         <div />
       </BurgerMenu>
       <MenuItems isOpen={isOpen}>
-        <NavLink to={"/home"}>Home</NavLink>
-        <NavLink to={"/search"}>Search</NavLink>
-        {isAuthenticated && <NavLink to={"/favorites"}>Favorites</NavLink>}
-        <NavLink to={"/companies"}>Car Seller Companies</NavLink>
+        <NavLink to={"/home"} onClick={handleNavLinkClick}>Home</NavLink>
+        <NavLink to={"/search"} onClick={handleNavLinkClick}>Search</NavLink>
+        {isAuthenticated && <NavLink to={"/favorites"} onClick={handleNavLinkClick}>Favorites</NavLink>}
+        <NavLink to={"/companies"} onClick={handleNavLinkClick}>Car Seller Companies</NavLink>
         {isAuthenticated ? (
           <>
-            {isAdmin && <NavLink to={"/adminPanel"}>Admin Panel </NavLink>}
-            <NavLink to={"/profile"}>Profile</NavLink>
-            <NavLink to="/login" onClick={logoutHandler}>Logout</NavLink>
+            {isAdmin && <NavLink to={"/adminPanel"} onClick={handleNavLinkClick}>Admin Panel </NavLink>}
+            <NavLink to={"/profile"} onClick={handleNavLinkClick}>Profile</NavLink>
+            <NavLink to="/login" onClick={() => { logoutHandler(); handleNavLinkClick(); }}>Logout</NavLink>
           </>
         ) : (
-          <NavLink to={"/login"}>Login</NavLink>
+          <NavLink to={"/login"} onClick={handleNavLinkClick}>Login</NavLink>
         )}
       </MenuItems>
     </StyledHeaderMenu>

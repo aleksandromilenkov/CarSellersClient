@@ -17,17 +17,29 @@ const sizes = {
     padding: 0.4rem 0.8rem;
     text-transform: uppercase;
     font-weight: 600;
-    text-align: center;
+    text-align: center;  
+  @media (max-width: 670px) {
+    font-size: 0.9rem;
+    padding: 0.2rem 0.4rem;
+  }
   `,
   medium: css`
     font-size: 1.4rem;
     padding: 1.2rem 1.6rem;
     font-weight: 500;
+      @media (max-width: 670px) {
+    font-size: 1rem;
+    padding: 0.7rem 0.9rem;
+  }
   `,
   large: css`
     font-size: 1.6rem;
     padding: 1.2rem 2.4rem;
     font-weight: 500;
+      @media (max-width: 670px) {
+    font-size: 1.1rem;
+    padding: 0.7rem 1.1rem;
+  }
   `,
 };
 

@@ -14,12 +14,19 @@ const ProfileContainer = styled.div`
   background-color: #f9f9f9; /* Light background for contrast */
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    @media (max-width: 670px) {
+    flex-direction:column;
+    align-items: center;
+  }
 `;
 
 const ProfileInfo = styled.div`
   flex: 1;
   margin-right: 20px;
   text-align: left; /* Align text to the left */
+      @media (max-width: 670px) {
+    text-align: center
+  }
 `;
 
 const ProfileImage = styled.img`
