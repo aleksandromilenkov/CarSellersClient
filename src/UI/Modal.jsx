@@ -23,6 +23,14 @@ import {
     box-shadow: var(--shadow-lg);
     padding: 3.2rem 4rem;
     transition: all 0.5s;
+        @media (max-width: 855px) {
+      left:20%;
+      transform: translate(0%, -50%);
+    }
+    @media (max-width: 600px) {
+      left:10%;
+      transform: translate(0%, -50%);
+    }
   `;
   
   const Overlay = styled.div`
@@ -45,7 +53,7 @@ import {
     transform: translateX(0.8rem);
     transition: all 0.2s;
     position: absolute;
-    top: 1.2rem;
+    top: 1.5rem;
     right: 1.9rem;
   
     &:hover {
@@ -104,7 +112,6 @@ import {
   
   function Window({ children, name }) {
     const { openName, close } = useContext(ModalContext);
-    // Ensure `close` is properly defined
   const ref = useOutsideClick({
     close: close || (() => console.warn("close is undefined")),
   });

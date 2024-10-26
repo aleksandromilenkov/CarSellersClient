@@ -18,14 +18,28 @@ import useEditCar from "./useEditCar";
 import { Car } from "../../Models/Car";
 import { useMemo } from "react";
 import styled from 'styled-components';
+import Button from "../../UI/Button";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 
 const FormContainer = styled.div`
-  background-color: #f8f9fa; /* Light background */
-  border-radius: 8px; /* Rounded corners */
-  padding: 20px; /* Padding inside the form */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  max-width: 600px; /* Max width for the form */
-  margin: 20px auto; /* Center the form */
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px; /* Restrict maximum width for larger screens */
+  max-height: 90vh; /* Set max height to fit within the viewport */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+  margin: 20px auto;
+
+  @media (max-width: 768px) {
+    padding: 15px; /* Reduce padding on smaller screens */
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px; /* Further reduce padding on very small screens */
+    width: 90%; /* Allow a smaller width for mobile screens */
+  }
 `;
 
 const FormTitle = styled.h2`
@@ -34,7 +48,11 @@ const FormTitle = styled.h2`
 `;
 
 const FormField = styled.div`
-  margin-bottom: 15px; /* Space between fields */
+  margin-bottom: 15px;
+
+  @media (max-width: 480px) {
+    margin-bottom: 10px; /* Adjust spacing on small screens */
+  }
 `;
 
 const Label = styled.label`
@@ -64,25 +82,16 @@ const ErrorMessage = styled.p`
   font-size: 14px; /* Font size for error messages */
 `;
 
-const Button = styled.button`
-  background-color: #007bff; /* Button color */
-  color: white; /* Text color */
-  padding: 10px 15px; /* Padding */
-  border: none; /* Remove border */
-  border-radius: 4px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor */
-  margin-right: 10px; /* Space between buttons */
-  transition: background-color 0.3s; /* Smooth transition for hover */
+// const Button = styled.button`
+//   /* Other styles remain the same */
+//   width: 100%; /* Make buttons full width on mobile for easy tapping */
+//   margin-bottom: 10px; /* Space between buttons on mobile */
 
-  &:hover {
-    background-color: #0056b3; /* Darker shade on hover */
-  }
-
-  &:disabled {
-    background-color: #ccc; /* Disable button background */
-    cursor: not-allowed; /* Not allowed cursor */
-  }
-`;
+//   @media (min-width: 481px) {
+//     width: auto; /* Revert to auto width on larger screens */
+//     margin-right: 10px;
+//   }
+// `;
 // Define form validation functions
 const validateYear = (year: number) => year >= 1900;
 const validatePositiveNumber = (value: number) => value > 0;
@@ -320,7 +329,7 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession, onCloseModal }: 
         const carRegistrationValue = filteredValues.carRegistration as CarRegistration;
         formData.append("carRegistration", CarRegistration[carRegistrationValue]);
       }
-      
+
       if (isEditSession && (editingCarModel as Car).carID) {
         const carID = (editingCarModel as Car).carID;
         editCar({ carInputs: formData, carId: carID });
@@ -336,7 +345,7 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession, onCloseModal }: 
   };
   
   if (isLoading || isLoadingCompanies || isLoadingManufacturers || isLoadingCarModels || isLoadingEditCar)
-    return <div>Loading...</div>;
+    return <LoadingSpinner/>
   if (error || error2 || error3)
     return <div>Error: {error.message || error2.message || error3.message}</div>;
 
@@ -476,10 +485,10 @@ const CreateCarForm = ({ onClose, editingCar={}, isEditSession, onCloseModal }: 
           {errors.carRegistration && <ErrorMessage>{errors.carRegistration.message}</ErrorMessage>}
         </FormField>
 
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Button type="submit" disabled={!selectedManufacturer}>{isEditSession ? "Edit Car" : "Create Car"}</Button>
-          <Button type="button" onClick={() => {
-            onClose && onClose(false);
+        <div style={{ display: 'flex', justifyContent:"center", gap: "1rem" }}>
+          <Button type="submit" size="small" disabled={!selectedManufacturer}>{isEditSession ? "Edit Car" : "Create Car"}</Button>
+          <Button type="button" size="small" onClick={() => {
+            onCloseModal && onCloseModal();
           }}>Cancel</Button>
         </div>
       </form>

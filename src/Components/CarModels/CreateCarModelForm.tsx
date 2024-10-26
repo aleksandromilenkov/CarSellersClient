@@ -14,6 +14,7 @@ import { Label } from "../../UI/Label";
 import { Select } from "../../UI/Select";
 import { Input } from "../../UI/Input";
 import { ErrorMessage } from "../../UI/ErrorMessage";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 const Button = styled.button`
   background-color: #007bff; /* Button color */
   color: white; /* Text color */
@@ -51,7 +52,7 @@ const CreateCarModelForm = ({ onClose }: Props) => {
 reset();
   };
 
-  if (isLoading || isLoadingManufacturers) return <p>Loading...</p>;
+  if (isLoading || isLoadingManufacturers) return <LoadingSpinner/>;
   
   return (
     <FormContainer>

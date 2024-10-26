@@ -3,6 +3,7 @@ import useFavoritesCars from "../Components/FavoritesCars/useFavoritesCars";
 import { Car as ModelCar } from "../Models/Car";
 import Car from "../Components/Cars/Car";
 import styled from "styled-components";
+import LoadingSpinner from "../UI/LoadingSpinner";
 const OutputedCars = styled.div`
   display:flex;
   flex-wrap:wrap;
@@ -20,7 +21,7 @@ type Props = {};
 
 const FavoritesPage = (props: Props) => {
   const [isLoading, favoriteCars, error] = useFavoritesCars();
-  if(isLoading)return <p>Loading...</p>
+  if(isLoading)return <LoadingSpinner/>
   if(error) return <p>{error}</p>
   console.log(favoriteCars)
   return <CarsOutputLayout>

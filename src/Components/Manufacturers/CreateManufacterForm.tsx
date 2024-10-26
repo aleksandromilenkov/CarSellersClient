@@ -14,6 +14,7 @@ import { Select } from "../../UI/Select";
 import { Input } from "../../UI/Input";
 import { ErrorMessage } from "../../UI/ErrorMessage";
 import styled from "styled-components";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 const Button = styled.button`
   background-color: #007bff; /* Button color */
   color: white; /* Text color */
@@ -50,7 +51,7 @@ const CreateManufacterForm = ({ onClose }: Props) => {
 reset();
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner/>
   
   return (
     <FormContainer>

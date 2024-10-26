@@ -8,6 +8,7 @@ import { Label } from '../../UI/Label';
 import { Input } from '../../UI/Input';
 import { ErrorMessage } from '../../UI/ErrorMessage';
 import { SubmitButton } from '../../UI/SubmitButton';
+import LoadingSpinner from '../../UI/LoadingSpinner';
 
 type Props = {};
 
@@ -45,7 +46,7 @@ const UpdateProfileForm: React.FC<Props> = (props: Props) => {
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner/>
 
   return (
     <div>

@@ -3,13 +3,14 @@ import useCompany from './useCompany';
 import { Car as ModelCar } from '../../Models/Car'
 import Car from '../Cars/Car'
 import useCompanyCars from './useCompanyCars';
+import LoadingSpinner from '../../UI/LoadingSpinner';
 
 type Props = {}
 
 const CarCompanyDetail = (props: Props) => {
     const [isLoading, company, error] = useCompany();
     const [isLoadingCars, companyCars, errorCars] = useCompanyCars();
-    if(isLoading || isLoadingCars) return <p>Loading...</p>
+    if(isLoading || isLoadingCars) return <LoadingSpinner/>
   return (
     <div>CarCompanyDetail
         <h1>{company.companyName}</h1>

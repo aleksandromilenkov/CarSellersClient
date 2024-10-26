@@ -117,9 +117,6 @@ const RegisterForm = (props: Props) => {
       />
       {errors?.password ? <p>{errors.password.message}</p> : ""}
     </FormField>
-    <FormField>
-      <a href="#">Forgot password?</a>
-    </FormField>
     <SubmitButton type="submit">Sign up</SubmitButton>
     <RegisterLink>
       Don’t have an account yet? <Link to="/login">Login here</Link>

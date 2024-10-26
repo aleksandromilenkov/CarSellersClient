@@ -3,6 +3,7 @@ import { Car } from '../../Models/Car'
 import CarComponent  from "./Car";
 import styled from 'styled-components';
 import useSearchCar from './useSearchCar';
+import LoadingSpinner from '../../UI/LoadingSpinner';
 const NoCarsMessage = styled.p`
   text-align: center; /* Center the message */
   color: #666; /* Lighter color */
@@ -21,7 +22,7 @@ type Props = {
 
 const CarsSearchResults = (props: Props) => {
     const [isLoading, cars, error] = useSearchCar();
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <LoadingSpinner/>
     if (error) return <div>Error: {error.message}</div>;
   return (
     <CarsOutputLayout>

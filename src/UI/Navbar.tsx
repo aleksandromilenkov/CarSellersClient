@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { HiOutlineUser } from "react-icons/hi2";
-import { NavLink as RouterNavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink as RouterNavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../Components/Authentication/userSlice";
 import { RootState } from "../store";
@@ -146,7 +146,7 @@ const Navbar = (props: Props) => {
   return (
     <StyledHeaderMenu>
       <LogoContainer>
-        <Logo src="https://localhost:7209/resources/CarSellersLogo.png" alt="logo" />
+        <Link to='/home'><Logo src="https://localhost:7209/resources/CarSellersLogo.png" alt="logo" /></Link>
       </LogoContainer>
       <BurgerMenu isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
         <div />
