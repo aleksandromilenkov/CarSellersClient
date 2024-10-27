@@ -31,6 +31,14 @@ export interface JwtPayloadInterface {
   role:string[]
 }
 
+export type ForgotPasswordInputs = {
+  email:string;
+}
+
+export type ResetPasswordInputs = {
+  password:string;
+}
+
 export type CreateCarInputs = {
   companyID: number;
   modelID: number;

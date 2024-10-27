@@ -53,6 +53,14 @@ interface UpdateUserResponse{
   email: string;
   profileImage: string|null;
 }
+interface ForgotPasswordRequest {
+  email:string;
+}
+interface ResetPasswordRequest {
+  email: string;
+  token: string;
+  password: string;
+}
 export async function getCurrentUser() {
   const user = localStorage.getItem("userCarSellers");
   return user;
@@ -104,5 +112,34 @@ export async function updateUserAPI(userInputs:FormData) : Promise<UpdateUserRes
   }catch(error:any){
       // Handle error appropriately
       throw new Error(error.response?.data.message || error.message);
+  }
+}
+
+export async function forgotPasswordAPI(forgotPasswordData: ForgotPasswordRequest) {
+  try{
+    const response: AxiosResponse<string> = await axios.post(
+      api + "account/forgot-password",
+      forgotPasswordData
+    );
+    return response.data;
+  }catch(error:any){
+      // Handle error appropriately
+      console.log(error)
+        throw new Error(error.response?.data[0].description || error.response?.data.message || error.message);
+  }
+}
+
+
+export async function resetPasswordAPI(resetPasswordData: ResetPasswordRequest) {
+  try{
+    const response: AxiosResponse<string> = await axios.post(
+      api + "account/reset-password",
+      resetPasswordData
+    );
+    return response.data;
+  }catch(error:any){
+      // Handle error appropriately
+      console.log(error)
+        throw new Error(error.response?.data[0].description || error.response?.data.message || error.message);
   }
 }

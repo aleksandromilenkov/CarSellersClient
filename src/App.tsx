@@ -23,6 +23,7 @@ import AboutPage from "./Pages/AboutPage";
 import ContactPage from "./Pages/ContactPage";
 import PrivacyPolicyPage from "./Pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./Pages/TermsPage";
+import ResetPassword from "./Components/Authentication/ResetPasswordForm";
 type Props = {};
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -59,6 +60,7 @@ const App = (props: Props) => {
             />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
+          <Route path="rest-password" element={<ResetPassword />} />
           <Route
               path="profile"
               element={

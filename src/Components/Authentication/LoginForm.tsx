@@ -13,6 +13,9 @@ import { SubmitButton } from "../../UI/SubmitButton";
 import { FormWrapper } from "../../UI/FormWrapper";
 import { ForgotPasswordLink } from "../../UI/ForgotPasswordLink";
 import { RegisterLink } from "../../UI/RegisterLink";
+import Modal from "../../UI/Modal";
+import Button from "../../UI/Button";
+import ForgotPasswordForm from "./ForgotPasswordForm";
 
 type Props = {};
 
@@ -54,7 +57,14 @@ const LoginForm = (props: Props) => {
         <Input type="password" id="password" placeholder="••••••••" {...register("password")} />
         {errors?.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
       </FormField>
-      <ForgotPasswordLink href="#">Forgot password?</ForgotPasswordLink>
+      <Modal>
+        <Modal.Open opens="forgot-password">
+          <ForgotPasswordLink>Forgot password?</ForgotPasswordLink>
+        </Modal.Open>
+        <Modal.Window name="forgot-password">
+        <ForgotPasswordForm/>
+        </Modal.Window>
+      </Modal>
       <SubmitButton type="submit">Sign in</SubmitButton>
       <RegisterLink>
         Don’t have an account yet? <Link to="/register">Register here</Link>
