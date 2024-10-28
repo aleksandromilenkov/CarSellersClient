@@ -9,6 +9,7 @@ import { FormField } from '../../UI/FormField';
 import { Label } from '../../UI/Label';
 import { Input } from '../../UI/Input';
 import { SubmitButton } from '../../UI/SubmitButton';
+import { ResetPasswordRequest } from '../../Services/apiAuth';
 
 const ResetPassword: React.FC = () => {
     const { register, formState: { errors }, handleSubmit, setError, clearErrors, reset } = useForm<ResetPasswordInputs>();
@@ -19,12 +20,13 @@ const ResetPassword: React.FC = () => {
     const {resetPassword, isLoading} = useResetPassword();
     const submitHandler = (formValues: ResetPasswordInputs)=> {
         const password = formValues.password;
+        const sendData: ResetPasswordRequest = {
+            email,
+            token,
+            newPassword: password
+        }
         try {
-            resetPassword( {
-             email,
-             token,
-             password
-         })
+            resetPassword(sendData)
          } catch (error) {
              setMessage('Error: Could not reset password.');
          }

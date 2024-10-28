@@ -56,10 +56,10 @@ interface UpdateUserResponse{
 interface ForgotPasswordRequest {
   email:string;
 }
-interface ResetPasswordRequest {
+export interface ResetPasswordRequest {
   email: string;
   token: string;
-  password: string;
+  newPassword: string;
 }
 export async function getCurrentUser() {
   const user = localStorage.getItem("userCarSellers");
@@ -132,6 +132,7 @@ export async function forgotPasswordAPI(forgotPasswordData: ForgotPasswordReques
 
 export async function resetPasswordAPI(resetPasswordData: ResetPasswordRequest) {
   try{
+    console.log(resetPasswordData);
     const response: AxiosResponse<string> = await axios.post(
       api + "account/reset-password",
       resetPasswordData

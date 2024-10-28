@@ -60,7 +60,7 @@ const App = (props: Props) => {
             />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
-          <Route path="rest-password" element={<ResetPassword />} />
+          <Route path="reset-password" element={<ResetPassword />} />
           <Route
               path="profile"
               element={
