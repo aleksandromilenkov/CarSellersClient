@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# Car Sellers Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This is the frontend for the Car Sellers application, built with React. It provides a user-friendly interface for managing cars, car models, manufacturers, and companies, with separate panels and permissions for regular users and admins.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Admin Panel**
+  - Only accessible to admins
+  - Allows creation, editing, and deletion of manufacturers, car models, cars, and companies
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **User Features**
+  - View and search for cars without logging in
+  - Logged-in users can add and remove cars from their favorites
+  - Profile management with options to update details and upload a profile image
+  - Password reset functionality with email link
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technologies Used
 
-### `npm test`
+- **Framework**: React (using TypeScript)
+- **State Management**: Redux Toolkit with Persist
+- **Form Handling**: React Hook Form with Yup for validation
+- **Data Fetching**: React Query (TanStack)
+- **UI Libraries**: Styled Components, Font Awesome, React Icons, React Hot Toast, React Error Boundary
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Project Setup
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js and npm (or yarn)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone the repository:
+   ```bash
+   git clone https://your-repo-url.git
+   cd your-repo-folder
+   
+### Set up environment variables:
+Create a .env file in the root directory.
+Add necessary environment variables (e.g., API URL).
 
-### `npm run eject`
+### Start Development Server:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    npm start
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Available Scripts
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+npm start: Runs the app in the development mode.
+npm run build: Builds the app for production.
+npm test: Runs the test suite.
+npm run eject: Ejects the configuration (not reversible).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Dependencies: 
+  @hookform/resolvers: Form validation
+  @reduxjs/toolkit: State management
+  @tanstack/react-query: Data fetching and caching
+  axios: API requests
+  dotenv: Environment variable management
+  jwt-decode: Token decoding for authentication
+  styled-components: Styled CSS in JS
+  typescript: Type safety
 
-## Learn More
+### Usage
+  Admin Actions
+    Only admins can access the Admin Panel to manage car-related data (cars, companies, manufacturers, car models).
+  User Actions
+    Search for cars without logging in.
+  Register, log in, and manage favorites (add/remove cars).
+  Request a password reset, with an email link provided for reset.
+  Update profile, including profile image upload.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Contributing
+If you'd like to contribute, please fork the repository and submit a pull request with your changes.
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### License
+This project is licensed under the MIT License.
