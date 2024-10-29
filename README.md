@@ -15,9 +15,7 @@ This is the frontend for the Car Sellers application, built with React. It provi
 
 ### Search page:
 
-![SearchForm](https://github.com/user-attachments/assets/f7bb9224-6705-477e-af05-192d47e001c3)
 ![SearchResults](https://github.com/user-attachments/assets/8ac754df-3bf0-4abd-a247-33ff18951ba8)
-![SearchResultsExample](https://github.com/user-attachments/assets/6a93cc96-e664-4d1f-b482-b90f7fe08b20)
 ![CarSearchResultExample](https://github.com/user-attachments/assets/bbfdae50-9f24-498e-a640-131cba417946)
 
 ### Favorites Page: 
