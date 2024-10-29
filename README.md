@@ -38,6 +38,7 @@ This is the frontend for the Car Sellers application, built with React. It provi
 ### Car:
 ![EditCarForm](https://github.com/user-attachments/assets/aed5f27d-bca8-441f-8cf2-8d77fb067dcb)
 ![DeleteCar](https://github.com/user-attachments/assets/c19572af-0438-469d-96f9-489d1d90de32)
+CAR CARD WITH USER THAT IS NOT ADMIN: 
 ![CarDisplayWithoutAdmin](https://github.com/user-attachments/assets/905e9ced-8ba3-4d0a-afcb-f2d1ef7f3eb3)
 
 ### User:
