@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is the frontend for the Car Sellers application, built with React. It provides a user-friendly interface for managing cars, car models, manufacturers, and companies, with separate panels and permissions for regular users and admins.
+This is the frontend for the Car Sellers application, built with React. It provides a user-friendly RESPONSIVE interface for managing cars, car models, manufacturers, and companies, with separate panels and permissions for regular users and admins.
 
 ### Home page:
 
