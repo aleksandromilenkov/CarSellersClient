@@ -98,8 +98,9 @@ registerInputs
     return response.data;
   }catch(error:any){
       // Handle error appropriately
+      const firstError =(Object.values(error?.response?.data?.errors as Record<string, string[]>)[0] as string[] | undefined)?.[0] ?? "Something went wrong";
       console.log(error)
-        throw new Error(error.response?.data[0].description || error.response?.data.message || error.message);
+        throw new Error(firstError|| error.response?.data.message || error.message);
   }
 }
 

@@ -100,7 +100,7 @@ const Car = (props: ModelCar) => {
       {CarColor[carColor] && <CardInfo>Color: {CarColor[carColor]}</CardInfo>}
       <CardInfo>Seller: {carSellerCompany.companyName}</CardInfo>
       <CardInfo>Kilometers: {kilometers}</CardInfo>
-      <CardInfo>Price: {price}</CardInfo>
+      <CardInfo>Price: ${price}</CardInfo>
       <CardInfo>Year: {year}</CardInfo>
         {isAdmin && <div className='adminActions'>
           <div style={{display:'flex', gap: '1rem', margin: '1rem 0'}}>

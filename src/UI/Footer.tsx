@@ -76,7 +76,7 @@ const Footer = () => {
           <i className="fa fa-twitter" aria-hidden="true"></i>
         </a>
       </SocialMedia>
-      <Copyright>© 2024 Car Sellers Page. All rights reserved.</Copyright>
+      <Copyright>© {new Date().getFullYear()} Car Sellers Page. All rights reserved.</Copyright>
     </FooterContainer>
   );
 };

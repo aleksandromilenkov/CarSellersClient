@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { getCars, getFavoritesCars } from "../../Services/apiCars";
-import { getCompanies } from "../../Services/apiCompanies";
+import { getCars } from "../../Services/apiCars";
 import { useSearchParams } from "react-router-dom";
 
 const useSearchCar = () => {

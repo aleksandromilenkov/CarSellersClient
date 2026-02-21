@@ -8,7 +8,10 @@ import LoadingSpinner from "../UI/LoadingSpinner";
 const CompaniesContainer =styled.div`
 width: 80%;
  margin: 0 auto;
-
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
 `
 
 type Props = {};

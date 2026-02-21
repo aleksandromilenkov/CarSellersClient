@@ -13,6 +13,7 @@ import CreateCompanyForm from './CreateCompanyForm';
 import useDeleteCar from '../Cars/useDeleteCar';
 import useDeleteCompany from './useDeleteCompany';
 import styled from 'styled-components';
+
 const CardContainer = styled.div`
   background-color: #ffffff; /* White background */
   border: 1px solid #ddd; /* Light border */
@@ -24,7 +25,7 @@ const CardContainer = styled.div`
   text-align: left; /* Align text to the left */
   transition: transform 0.2s; /* Smooth scale effect on hover */
   overflow:hidden;
-
+  width: auto-fill;
   &:hover {
     transform: scale(1.02); /* Slightly enlarge card on hover */
   }

@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useManufacturers from "../Manufacturers/useManufacturers";
-import { CreateCarModelInputs, CreateManufacturerInputs } from "../../Utils/Helpers/Types";;
+import { CreateCarModelInputs, CreateManufacturerInputs } from "../../Utils/Helpers/Types";
 import { Manufacturer } from "../../Models/Manufacturer";
 import useCreateManufacturer from "./useCreateManufacturer";
 import { FormContainer } from "../../UI/FormContainer";

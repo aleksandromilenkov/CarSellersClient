@@ -107,6 +107,7 @@ const CarDetail = (props: Props) => {
   const decodedToken = jwtDecode<JwtPayloadInterface>(user.token.toString());
   const userRoles = decodedToken.role || [];
   isAdmin = userRoles.includes('Admin');
+  }
   console.log(car)
   if(isLoading)return <LoadingSpinner/>
   return (
@@ -121,7 +122,7 @@ const CarDetail = (props: Props) => {
     {CarColor[car?.carColor] && <CardInfo>Color: {CarColor[car?.carColor]}</CardInfo>}
     <CardInfo>Seller: {car?.carSellerCompany.companyName}</CardInfo>
     <CardInfo>Kilometers: {car?.kilometers}</CardInfo>
-    <CardInfo>Price: {car?.price}</CardInfo>
+    <CardInfo>Price: ${car?.price}</CardInfo>
     <CardInfo>Year: {car?.year}</CardInfo>
 
     {isAdmin && (
@@ -153,7 +154,6 @@ const CarDetail = (props: Props) => {
     )}
 
     <ActionsContainer>
-      <CardButton onClick={() => navigate(`/cars/${car?.carID}`)}>View Car</CardButton>
       {!isThisCarAlreadyInFavorites && isAuthenticated && (
         <CardButton onClick={() => addToFavorites(car?.carID)}>Add To Favorites</CardButton>
       )}
@@ -165,6 +165,6 @@ const CarDetail = (props: Props) => {
     </ActionsContainer>
   </CarDetailContainer>
   )
-}}
+}
 
 export default CarDetail

@@ -65,8 +65,8 @@ const MemberCard = styled.div`
 const AboutPage = () => {
   const teamMembers = [
     { name: 'Aleksandro Milenkov', role: 'CEO' },
-    { name: 'Martin Zdravkovski', role: 'Sales Manager' },
-    { name: 'Stefan Jakimovski', role: 'Marketing Director' },
+    { name: 'Martin Zdravkovski', role: 'Marketing Director' },
+    { name: 'Stefan Jakimovski', role: 'Sales Manager' },
     { name: 'Simona Hristova', role: 'Customer Support' },
   ];
 
